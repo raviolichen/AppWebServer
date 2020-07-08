@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AppDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Banner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="url" Type="nvarchar(max)" />
+    <Property Name="dateStart" Type="datetime" />
+    <Property Name="dateEnd" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventPage">
+    <Key>
+      <PropertyRef Name="eid" />
+    </Key>
+    <Property Name="eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="url" Type="nvarchar(max)" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="html" Type="nvarchar(max)" />
+    <Property Name="dateStart" Type="datetime" />
+    <Property Name="dateEnd" Type="datetime" />
+    <Property Name="slvLimit" Type="int" />
+    <Property Name="toGoldNum" Type="int" />
+    <Property Name="postDate" Type="datetime" />
+    <Property Name="evenType" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Gold">
+    <Key>
+      <PropertyRef Name="goldId" />
+    </Key>
+    <Property Name="goldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="goldname" Type="nvarchar(max)" />
+    <Property Name="html" Type="nvarchar(max)" />
+    <Property Name="potos" Type="nvarchar(max)" />
+    <Property Name="goldnum" Type="int" />
+    <Property Name="qrcode" Type="image" />
+    <Property Name="isEnable" Type="bit" />
+    <Property Name="ownerUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="messagePublish">
+    <Key>
+      <PropertyRef Name="pId" />
+    </Key>
+    <Property Name="pId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="p_users" Type="nvarchar(max)" />
+    <Property Name="pDateStart" Type="datetime" />
+    <Property Name="pDateEnd" Type="datetime" />
+    <Property Name="pmessage" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SignForm">
+    <Key>
+      <PropertyRef Name="sId" />
+    </Key>
+    <Property Name="sId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="eId" Type="int" Nullable="false" />
+    <Property Name="userLimit" Type="int" />
+    <Property Name="dateStart" Type="datetime" />
+    <Property Name="dateEnd" Type="datetime" />
+    <Property Name="field" Type="nvarchar(max)" />
+    <Property Name="isEanble" Type="bit" />
+  </EntityType>
+  <EntityType Name="SignRecords">
+    <Key>
+      <PropertyRef Name="sId" />
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="sId" Type="int" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="signData" Type="nvarchar(max)" />
+    <Property Name="isComplete" Type="bit" />
+    <Property Name="completeDatetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Slvs">
+    <Key>
+      <PropertyRef Name="slvId" />
+    </Key>
+    <Property Name="slvId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="eId" Type="int" Nullable="false" />
+    <Property Name="sname" Type="nvarchar(max)" />
+    <Property Name="html" Type="nvarchar(max)" />
+    <Property Name="potos" Type="nvarchar(max)" />
+    <Property Name="isEnable" Type="bit" />
+    <Property Name="qrcode" Type="nvarchar(max)" />
+    <Property Name="slvNum" Type="int" />
+    <Property Name="maxUse" Type="int" />
+  </EntityType>
+  <EntityType Name="store">
+    <Key>
+      <PropertyRef Name="storeId" />
+    </Key>
+    <Property Name="storeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="storeName" Type="nvarchar(max)" />
+    <Property Name="html" Type="nvarchar(max)" />
+    <Property Name="sotrePhone" Type="nvarchar(max)" />
+    <Property Name="sotreAddr" Type="nvarchar(max)" />
+    <Property Name="stroeMapLocation" Type="nvarchar(max)" />
+    <Property Name="sotreWeb" Type="nvarchar(max)" />
+    <Property Name="sotreWeb2" Type="nvarchar(max)" />
+    <Property Name="potos" Type="nvarchar(max)" />
+    <Property Name="products" Type="nvarchar(max)" />
+    <Property Name="isEnable" Type="bit" />
+    <Property Name="stId" Type="int" />
+    <Property Name="ownerUser" Type="int" />
+  </EntityType>
+  <EntityType Name="StoreType">
+    <Key>
+      <PropertyRef Name="stId" />
+    </Key>
+    <Property Name="stId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="stName" Type="nvarchar(max)" />
+    <Property Name="stpotos" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="nvarchar" MaxLength="20" />
+    <Property Name="oAuth" Type="nvarchar(max)" />
+    <Property Name="powerGroup" Type="int" />
+    <Property Name="isEanble" Type="bit" />
+    <Property Name="password" Type="nvarchar(max)" />
+    <Property Name="loginName" Type="nvarchar" MaxLength="20" />
+    <Property Name="deviceId" Type="nvarchar(max)" />
+    <Property Name="token" Type="nvarchar(max)" />
+    <Property Name="tokendate" Type="datetime" />
+    <Property Name="goldnum" Type="int" />
+  </EntityType>
+  <EntityType Name="UserCoinReord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="coinId" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="num" Type="int" />
+    <Property Name="dateGet" Type="datetime" />
+    <Property Name="cointype" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserGroup">
+    <Key>
+      <PropertyRef Name="gId" />
+    </Key>
+    <Property Name="gId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gname" Type="nvarchar(max)" />
+    <Property Name="powerlevel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserSlv">
+    <Key>
+      <PropertyRef Name="eId" />
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="eId" Type="int" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="currNum" Type="int" />
+    <Property Name="accNum" Type="int" />
+    <Property Name="dateStart" Type="datetime" />
+    <Property Name="dateEnd" Type="datetime" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'E:\CODEJOB\APPWEBSERVER\APPWEBSERVER\APP_DATA\APPDATABASE.MDF.dbo.EventSlvs' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="EventSlvs">
+    <Key>
+      <PropertyRef Name="eid" />
+      <PropertyRef Name="slvId" />
+    </Key>
+    <Property Name="eid" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="dateStart" Type="datetime" />
+    <Property Name="dateEnd" Type="datetime" />
+    <Property Name="slvLimit" Type="int" />
+    <Property Name="toGoldNum" Type="int" />
+    <Property Name="slvId" Type="int" Nullable="false" />
+    <Property Name="isEnable" Type="bit" />
+    <Property Name="slvNum" Type="int" />
+    <Property Name="maxUse" Type="int" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'E:\CODEJOB\APPWEBSERVER\APPWEBSERVER\APP_DATA\APPDATABASE.MDF.dbo.ownerSlvsdetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="ownerSlvsdetail">
+    <Key>
+      <PropertyRef Name="eId" />
+      <PropertyRef Name="slvId" />
+    </Key>
+    <Property Name="eId" Type="int" Nullable="false" />
+    <Property Name="sname" Type="nvarchar(max)" />
+    <Property Name="slvId" Type="int" Nullable="false" />
+    <Property Name="potos" Type="nvarchar(max)" />
+    <Property Name="dateGet" Type="datetime" />
+    <Property Name="num" Type="int" />
+  </EntityType>
+  <Association Name="FK_SignForm_ToTable">
+    <End Role="EventPage" Type="Self.EventPage" Multiplicity="1" />
+    <End Role="SignForm" Type="Self.SignForm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPage">
+        <PropertyRef Name="eid" />
+      </Principal>
+      <Dependent Role="SignForm">
+        <PropertyRef Name="eId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SingRecords_ToSign">
+    <End Role="SignForm" Type="Self.SignForm" Multiplicity="1" />
+    <End Role="SignRecords" Type="Self.SignRecords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SignForm">
+        <PropertyRef Name="sId" />
+      </Principal>
+      <Dependent Role="SignRecords">
+        <PropertyRef Name="sId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SingRecords_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="SignRecords" Type="Self.SignRecords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="SignRecords">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Slv_ToEventPage">
+    <End Role="EventPage" Type="Self.EventPage" Multiplicity="1" />
+    <End Role="Slvs" Type="Self.Slvs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPage">
+        <PropertyRef Name="eid" />
+      </Principal>
+      <Dependent Role="Slvs">
+        <PropertyRef Name="eId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_store_ToStoreType">
+    <End Role="StoreType" Type="Self.StoreType" Multiplicity="0..1" />
+    <End Role="store" Type="Self.store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreType">
+        <PropertyRef Name="stId" />
+      </Principal>
+      <Dependent Role="store">
+        <PropertyRef Name="stId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_store_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="store" Type="Self.store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="store">
+        <PropertyRef Name="ownerUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserCoinReord_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserCoinReord" Type="Self.UserCoinReord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="UserCoinReord">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSlv_ToEventPage">
+    <End Role="EventPage" Type="Self.EventPage" Multiplicity="1" />
+    <End Role="UserSlv" Type="Self.UserSlv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPage">
+        <PropertyRef Name="eid" />
+      </Principal>
+      <Dependent Role="UserSlv">
+        <PropertyRef Name="eId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSlv_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserSlv" Type="Self.UserSlv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="UserSlv">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AppDataBaseModelStoreContainer">
+    <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPage" EntityType="Self.EventPage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gold" EntityType="Self.Gold" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="messagePublish" EntityType="Self.messagePublish" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SignForm" EntityType="Self.SignForm" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SignRecords" EntityType="Self.SignRecords" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Slvs" EntityType="Self.Slvs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreType" EntityType="Self.StoreType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserCoinReord" EntityType="Self.UserCoinReord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserSlv" EntityType="Self.UserSlv" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventSlvs" EntityType="Self.EventSlvs" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[EventSlvs].[eid] AS [eid], 
+[EventSlvs].[name] AS [name], 
+[EventSlvs].[dateStart] AS [dateStart], 
+[EventSlvs].[dateEnd] AS [dateEnd], 
+[EventSlvs].[slvLimit] AS [slvLimit], 
+[EventSlvs].[toGoldNum] AS [toGoldNum], 
+[EventSlvs].[slvId] AS [slvId], 
+[EventSlvs].[isEnable] AS [isEnable], 
+[EventSlvs].[slvNum] AS [slvNum], 
+[EventSlvs].[maxUse] AS [maxUse]
+FROM [dbo].[EventSlvs] AS [EventSlvs]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ownerSlvsdetail" EntityType="Self.ownerSlvsdetail" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[ownerSlvsdetail].[eId] AS [eId], 
+[ownerSlvsdetail].[sname] AS [sname], 
+[ownerSlvsdetail].[slvId] AS [slvId], 
+[ownerSlvsdetail].[potos] AS [potos], 
+[ownerSlvsdetail].[dateGet] AS [dateGet], 
+[ownerSlvsdetail].[num] AS [num]
+FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_SignForm_ToTable" Association="Self.FK_SignForm_ToTable">
+      <End Role="EventPage" EntitySet="EventPage" />
+      <End Role="SignForm" EntitySet="SignForm" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SingRecords_ToSign" Association="Self.FK_SingRecords_ToSign">
+      <End Role="SignForm" EntitySet="SignForm" />
+      <End Role="SignRecords" EntitySet="SignRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SingRecords_ToUser" Association="Self.FK_SingRecords_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="SignRecords" EntitySet="SignRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Slv_ToEventPage" Association="Self.FK_Slv_ToEventPage">
+      <End Role="EventPage" EntitySet="EventPage" />
+      <End Role="Slvs" EntitySet="Slvs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_store_ToStoreType" Association="Self.FK_store_ToStoreType">
+      <End Role="StoreType" EntitySet="StoreType" />
+      <End Role="store" EntitySet="store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_store_ToUser" Association="Self.FK_store_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="store" EntitySet="store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserCoinReord_ToUser" Association="Self.FK_UserCoinReord_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserCoinReord" EntitySet="UserCoinReord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSlv_ToEventPage" Association="Self.FK_UserSlv_ToEventPage">
+      <End Role="EventPage" EntitySet="EventPage" />
+      <End Role="UserSlv" EntitySet="UserSlv" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSlv_ToUser" Association="Self.FK_UserSlv_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserSlv" EntitySet="UserSlv" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

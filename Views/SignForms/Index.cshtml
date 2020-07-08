@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AppWebServer.Models.SignForm>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           報名人數上限
+        </th>
+        <th>
+          開始日期
+        </th>
+        <th>
+           截止日期
+        </th>
+        <th>
+           欄位名稱
+        </th>
+        <th>
+           是否啟用
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.userLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.field)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isEanble)
+        </td>
+        <td>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.sId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.sId })
+            @Html.HiddenFor(modelItem => item.EventPage.eid)
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AppWebServer.Models.store>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.storeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sotrePhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sotreAddr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sotreWeb)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sotreWeb2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.potos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isEnable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StoreType.stName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.userName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.storeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotrePhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotreAddr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotreWeb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotreWeb2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.potos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isEnable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StoreType.stName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.userName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.storeId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.storeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.storeId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AppWebServer.Models.Gold>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.goldname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.html)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.potos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.goldnum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qrcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isEnable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ownerUserId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.goldname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.html)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.potos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.goldnum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qrcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isEnable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ownerUserId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.goldId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.goldId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.goldId })
+        </td>
+    </tr>
+}
+
+</table>

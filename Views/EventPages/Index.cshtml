@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AppWebServer.Models.EventPage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+          
+        </th>
+        <th>
+            名稱
+        </th>
+        <th>
+            活動開始日期
+        </th>
+        <th>
+            活動截止日期
+        </th>
+        <th>
+            可獲得銀幣上限
+        </th>
+        <th>
+            金幣比率
+        </th>
+        <th>
+            編輯時間
+        </th>
+        <th>
+            活動類型
+        </th>
+        <th>
+            <span></span>
+        </th>
+        <th>
+            <span></span>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src='@Html.DisplayFor(modelItem => item.url)' alt='img' style="width:100px;height:100px"/>
+        </td>
+        <td>
+            @Html.ActionLink(item.name, "Edit", new { id = item.eid })
+        </td>
+        <td>
+           @Html.DisplayFor(modelItem => item.dateStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.slvLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.toGoldNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.evenType)
+        </td>
+        <td>
+            @Html.ActionLink("銀幣管理", "Index", "Slvs", new { eId = item.eid }, null)
+        </td>
+        <td>
+            @Html.ActionLink("報名管理", "Index", "SignForms", new { eid = item.eid }, null)
+        </td>
+        <td>
+            @Html.ActionLink("刪除", "Delete", new { id = item.eid })
+        </td>
+    </tr>
+}
+
+</table>

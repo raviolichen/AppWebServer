@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppDataBaseModelStoreContainer" CdmEntityContainer="AppDataBaseEntities">
+    <EntitySetMapping Name="Banner">
+      <EntityTypeMapping TypeName="AppDataBaseModel.Banner">
+        <MappingFragment StoreEntitySet="Banner">
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventPage">
+      <EntityTypeMapping TypeName="AppDataBaseModel.EventPage">
+        <MappingFragment StoreEntitySet="EventPage">
+          <ScalarProperty Name="evenType" ColumnName="evenType" />
+          <ScalarProperty Name="postDate" ColumnName="postDate" />
+          <ScalarProperty Name="toGoldNum" ColumnName="toGoldNum" />
+          <ScalarProperty Name="slvLimit" ColumnName="slvLimit" />
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="eid" ColumnName="eid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SignForm">
+      <EntityTypeMapping TypeName="AppDataBaseModel.SignForm">
+        <MappingFragment StoreEntitySet="SignForm">
+          <ScalarProperty Name="isEanble" ColumnName="isEanble" />
+          <ScalarProperty Name="field" ColumnName="field" />
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="userLimit" ColumnName="userLimit" />
+          <ScalarProperty Name="eId" ColumnName="eId" />
+          <ScalarProperty Name="sId" ColumnName="sId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SignRecords">
+      <EntityTypeMapping TypeName="AppDataBaseModel.SignRecords">
+        <MappingFragment StoreEntitySet="SignRecords">
+          <ScalarProperty Name="completeDatetime" ColumnName="completeDatetime" />
+          <ScalarProperty Name="isComplete" ColumnName="isComplete" />
+          <ScalarProperty Name="signData" ColumnName="signData" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="sId" ColumnName="sId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="AppDataBaseModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="goldnum" ColumnName="goldnum" />
+          <ScalarProperty Name="tokendate" ColumnName="tokendate" />
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="deviceId" ColumnName="deviceId" />
+          <ScalarProperty Name="loginName" ColumnName="loginName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="isEanble" ColumnName="isEanble" />
+          <ScalarProperty Name="powerGroup" ColumnName="powerGroup" />
+          <ScalarProperty Name="oAuth" ColumnName="oAuth" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSlv">
+      <EntityTypeMapping TypeName="AppDataBaseModel.UserSlv">
+        <MappingFragment StoreEntitySet="UserSlv">
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="accNum" ColumnName="accNum" />
+          <ScalarProperty Name="currNum" ColumnName="currNum" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="eId" ColumnName="eId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gold">
+      <EntityTypeMapping TypeName="AppDataBaseModel.Gold">
+        <MappingFragment StoreEntitySet="Gold">
+          <ScalarProperty Name="ownerUserId" ColumnName="ownerUserId" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+          <ScalarProperty Name="qrcode" ColumnName="qrcode" />
+          <ScalarProperty Name="goldnum" ColumnName="goldnum" />
+          <ScalarProperty Name="potos" ColumnName="potos" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="goldname" ColumnName="goldname" />
+          <ScalarProperty Name="goldId" ColumnName="goldId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="messagePublish">
+      <EntityTypeMapping TypeName="AppDataBaseModel.messagePublish">
+        <MappingFragment StoreEntitySet="messagePublish">
+          <ScalarProperty Name="pmessage" ColumnName="pmessage" />
+          <ScalarProperty Name="pDateEnd" ColumnName="pDateEnd" />
+          <ScalarProperty Name="pDateStart" ColumnName="pDateStart" />
+          <ScalarProperty Name="p_users" ColumnName="p_users" />
+          <ScalarProperty Name="pId" ColumnName="pId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="store">
+      <EntityTypeMapping TypeName="AppDataBaseModel.store">
+        <MappingFragment StoreEntitySet="store">
+          <ScalarProperty Name="stroeMapLocation" ColumnName="stroeMapLocation" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="ownerUser" ColumnName="ownerUser" />
+          <ScalarProperty Name="stId" ColumnName="stId" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+          <ScalarProperty Name="products" ColumnName="products" />
+          <ScalarProperty Name="potos" ColumnName="potos" />
+          <ScalarProperty Name="sotreWeb2" ColumnName="sotreWeb2" />
+          <ScalarProperty Name="sotreWeb" ColumnName="sotreWeb" />
+          <ScalarProperty Name="sotreAddr" ColumnName="sotreAddr" />
+          <ScalarProperty Name="sotrePhone" ColumnName="sotrePhone" />
+          <ScalarProperty Name="storeName" ColumnName="storeName" />
+          <ScalarProperty Name="storeId" ColumnName="storeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreType">
+      <EntityTypeMapping TypeName="AppDataBaseModel.StoreType">
+        <MappingFragment StoreEntitySet="StoreType">
+          <ScalarProperty Name="stpotos" ColumnName="stpotos" />
+          <ScalarProperty Name="stName" ColumnName="stName" />
+          <ScalarProperty Name="stId" ColumnName="stId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGroup">
+      <EntityTypeMapping TypeName="AppDataBaseModel.UserGroup">
+        <MappingFragment StoreEntitySet="UserGroup">
+          <ScalarProperty Name="powerlevel" ColumnName="powerlevel" />
+          <ScalarProperty Name="gname" ColumnName="gname" />
+          <ScalarProperty Name="gId" ColumnName="gId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserCoinReord">
+      <EntityTypeMapping TypeName="AppDataBaseModel.UserCoinReord">
+        <MappingFragment StoreEntitySet="UserCoinReord">
+          <ScalarProperty Name="cointype" ColumnName="cointype" />
+          <ScalarProperty Name="dateGet" ColumnName="dateGet" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="coinId" ColumnName="coinId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventSlvs">
+      <EntityTypeMapping TypeName="AppDataBaseModel.EventSlvs">
+        <MappingFragment StoreEntitySet="EventSlvs">
+          <ScalarProperty Name="maxUse" ColumnName="maxUse" />
+          <ScalarProperty Name="slvNum" ColumnName="slvNum" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+          <ScalarProperty Name="slvId" ColumnName="slvId" />
+          <ScalarProperty Name="toGoldNum" ColumnName="toGoldNum" />
+          <ScalarProperty Name="slvLimit" ColumnName="slvLimit" />
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="eid" ColumnName="eid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Slvs">
+      <EntityTypeMapping TypeName="AppDataBaseModel.Slvs">
+        <MappingFragment StoreEntitySet="Slvs">
+          <ScalarProperty Name="maxUse" ColumnName="maxUse" />
+          <ScalarProperty Name="slvNum" ColumnName="slvNum" />
+          <ScalarProperty Name="qrcode" ColumnName="qrcode" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+          <ScalarProperty Name="potos" ColumnName="potos" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="sname" ColumnName="sname" />
+          <ScalarProperty Name="eId" ColumnName="eId" />
+          <ScalarProperty Name="slvId" ColumnName="slvId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ownerSlvsdetail">
+      <EntityTypeMapping TypeName="AppDataBaseModel.ownerSlvsdetail">
+        <MappingFragment StoreEntitySet="ownerSlvsdetail">
+          <ScalarProperty Name="eId" ColumnName="eId" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="dateGet" ColumnName="dateGet" />
+          <ScalarProperty Name="potos" ColumnName="potos" />
+          <ScalarProperty Name="slvId" ColumnName="slvId" />
+          <ScalarProperty Name="sname" ColumnName="sname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

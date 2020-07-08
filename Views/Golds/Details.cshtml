@@ -1,0 +1,75 @@
+﻿@model AppWebServer.Models.Gold
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Gold</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.goldname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.goldname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.html)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.html)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.potos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.potos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.goldnum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.goldnum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.qrcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qrcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isEnable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isEnable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ownerUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ownerUserId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.goldId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

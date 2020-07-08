@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AppWebServer.Models.Banner>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateEnd)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.url != null && item.url.Length > 0)
+            {
+                <img src='@item.url' alt="img" style="width:100px;height:100px" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateEnd)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

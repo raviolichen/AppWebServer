@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AppWebServer.Models.Slvs>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",new {eId=Request["eId"] })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.potos)
+        </th>
+        <th>
+            名稱
+        </th>
+        <th>
+            銀幣數量
+        </th>
+        <th>
+            可重複使用次數
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qrcode)
+        </th>
+        <th>
+            是否啟用
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.potos != null && item.potos.Length > 0)
+            {
+                <img src='@item.potos.Split(',')[0]' alt="img" style="width:100px;height:100px" />
+            }
+        </td>
+        <td>
+            @Html.ActionLink(item.sname, "Edit", new { id = item.slvId })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.slvNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxUse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qrcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isEnable)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.slvId })
+        </td>
+    </tr>
+}
+
+</table>
