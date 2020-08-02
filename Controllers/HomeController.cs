@@ -35,7 +35,7 @@ namespace AppWebServer.Controllers
         public ActionResult regVote()
         {
             int userId = int.Parse(User.Identity.Name);
-            List<Vote> votes = db.Vote.Where(i => i.dateStart <= DateTime.Now ).ToList().Where(i=> i.dateEnd.GetValueOrDefault().AddDays(1) >= DateTime.Now && i.voteType.ToLower().CompareTo("store") == 0).OrderByDescending(o => o.eId).ToList();
+            List<Vote> votes = db.Vote.Where(i => i.RdateStart <= DateTime.Now ).ToList().Where(i=> i.RdateEnd.GetValueOrDefault().AddDays(1) >= DateTime.Now && i.voteType.ToLower().CompareTo("store") == 0 && i.isEnable.GetValueOrDefault()).OrderByDescending(o => o.eId).ToList();
             return PartialView(votes);
         }
     }

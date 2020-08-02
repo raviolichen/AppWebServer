@@ -190,6 +190,8 @@
           <Property Name="voteCount" Type="int" />
           <Property Name="dateStart" Type="datetime" />
           <Property Name="dateEnd" Type="datetime" />
+          <Property Name="RdateStart" Type="datetime" />
+          <Property Name="RdateEnd" Type="datetime" />
           <Property Name="isEnable" Type="bit" />
           <Property Name="voteType" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -921,6 +923,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="VoteItem" Relationship="AppDataBaseModel.FK_VoteItem_Vote" FromRole="Vote" ToRole="VoteItem" />
           <Property Name="voteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="voteCount" Type="Int32" />
+          <Property Name="RdateStart" Type="DateTime" Precision="3" />
+          <Property Name="RdateEnd" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="VoteItem">
           <Key>
@@ -1197,6 +1201,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="Vote">
             <EntityTypeMapping TypeName="AppDataBaseModel.Vote">
               <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="RdateEnd" ColumnName="RdateEnd" />
+                <ScalarProperty Name="RdateStart" ColumnName="RdateStart" />
                 <ScalarProperty Name="voteCount" ColumnName="voteCount" />
                 <ScalarProperty Name="voteType" ColumnName="voteType" />
                 <ScalarProperty Name="isEnable" ColumnName="isEnable" />

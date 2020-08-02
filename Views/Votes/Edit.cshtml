@@ -31,6 +31,31 @@
             @Html.ValidationMessageFor(model => model.voteCount, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>申請日期起</p></div>
+        <div class="col-md-10">
+            <div class='input-group datepicker date'>
+                <input type="datetime" value="@(Model.RdateStart==null?DateTime.Now.ToString("yyyy/MM/dd"):Model.RdateStart.Value.ToString("yyyy/MM/dd"))" name="RdateStart" id="RdateStart" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>申請日期迄</p></div>
+        <div class="col-md-10">
+            <div class='input-group datepicker date'>
+                <input type="datetime" value="@(Model.RdateEnd==null?DateTime.Now.ToString("yyyy/MM/dd"):Model.RdateEnd.Value.ToString("yyyy/MM/dd"))" name="RdateEnd" id="RdateEnd" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="control-label col-md-2"><p>活動日期起</p></div>
         <div class="col-md-10">

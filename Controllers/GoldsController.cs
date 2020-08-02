@@ -76,7 +76,6 @@ namespace AppWebServer.Controllers
             ViewBag.ownerUserId = new SelectList(db.User, "userId", "userName", gold.ownerUserId);
             return View(gold);
         }
-
         // GET: Golds/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -92,7 +91,6 @@ namespace AppWebServer.Controllers
             ViewBag.ownerUserId = new SelectList(db.User, "userId", "userName", gold.ownerUserId);
             return View(gold);
         }
-
         // POST: Golds/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
@@ -114,7 +112,6 @@ namespace AppWebServer.Controllers
             }
             return View(gold);
         }
-
         // GET: Golds/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -129,11 +126,9 @@ namespace AppWebServer.Controllers
             }
             return View(gold);
         }
-
         // POST: Golds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-
         public ActionResult DeleteConfirmed(int id)
         {
             Gold gold = db.Gold.Find(id);

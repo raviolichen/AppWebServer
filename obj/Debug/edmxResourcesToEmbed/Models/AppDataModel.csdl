@@ -424,6 +424,8 @@
     <NavigationProperty Name="VoteItem" Relationship="AppDataBaseModel.FK_VoteItem_Vote" FromRole="Vote" ToRole="VoteItem" />
     <Property Name="voteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="voteCount" Type="Int32" />
+    <Property Name="RdateStart" Type="DateTime" Precision="3" />
+    <Property Name="RdateEnd" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="VoteItem">
     <Key>

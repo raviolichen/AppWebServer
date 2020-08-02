@@ -211,6 +211,8 @@
     <EntitySetMapping Name="Vote">
       <EntityTypeMapping TypeName="AppDataBaseModel.Vote">
         <MappingFragment StoreEntitySet="Vote">
+          <ScalarProperty Name="RdateEnd" ColumnName="RdateEnd" />
+          <ScalarProperty Name="RdateStart" ColumnName="RdateStart" />
           <ScalarProperty Name="voteCount" ColumnName="voteCount" />
           <ScalarProperty Name="voteType" ColumnName="voteType" />
           <ScalarProperty Name="isEnable" ColumnName="isEnable" />

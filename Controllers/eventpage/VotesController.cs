@@ -79,7 +79,7 @@ namespace AppWebServer.Controllers
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "vId,dateStart,dateEnd,isEnable,voteType,voteCount")] Vote vote)
+        public ActionResult Create([Bind(Include = "vId,dateStart,dateEnd,RdateStart,RdateEnd,isEnable,voteType,voteCount")] Vote vote)
         {
             int _eid = int.Parse(TempData["eid"].ToString());
             if (ModelState.IsValid)
@@ -115,7 +115,7 @@ namespace AppWebServer.Controllers
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "vId,dateStart,dateEnd,isEnable,voteCount")] Vote vote)
+        public ActionResult Edit([Bind(Include = "vId,dateStart,dateEnd,RdateStart,RdateEnd,isEnable,voteCount")] Vote vote)
         {
             int _eid = int.Parse(TempData["eid"].ToString());
             if (ModelState.IsValid)
@@ -124,6 +124,8 @@ namespace AppWebServer.Controllers
                 orginvote.voteCount = vote.voteCount;
                 orginvote.dateStart = vote.dateStart;
                 orginvote.dateEnd = vote.dateEnd;
+                orginvote.RdateStart = vote.RdateStart;
+                orginvote.RdateEnd = vote.RdateEnd;
                 orginvote.isEnable = vote.isEnable;
                 db.Entry(orginvote).State = EntityState.Modified;
                 db.SaveChanges();

@@ -80,7 +80,7 @@
         </tr>
     }
 </table>
-@if (User.IsInRole("admin") || User.IsInRole("manage"))
+@if ((User.IsInRole("admin") || User.IsInRole("manage"))&&Request["eId"]!=null)
 {
     <p>
         @Html.ActionLink("返回列表", "Index", "Votes", new { eId = Request["eId"] }, null)

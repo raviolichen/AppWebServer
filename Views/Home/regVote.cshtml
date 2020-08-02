@@ -12,10 +12,10 @@
             活動圖片
         </th>
         <th>
-            票選開始日期
+            票選報名開始日期
         </th>
         <th>
-            票選結束日期
+            票選報名結束日期
         </th>
         <th></th>
         <th></th>
@@ -33,10 +33,10 @@
             }
         </td>
         <td>
-            @(item.dateStart!=null?item.dateStart.Value.ToString("yyyy/MM/dd"):"")
+            @(item.RdateStart!=null?item.RdateStart.Value.ToString("yyyy/MM/dd"):"")
         </td>
         <td>
-            @(item.dateEnd!=null?item.dateEnd.Value.ToString("yyyy/MM/dd"):"")
+            @(item.RdateEnd!=null?item.RdateEnd.Value.ToString("yyyy/MM/dd"):"")
         </td>
         <td>
             @Html.ActionLink(User.IsInRole("manage")|| User.IsInRole("admin") ? "前往審核": "前往報名", "Index","VoteItems", new { id = item.vId }, new { @class = "btn btn-info" })

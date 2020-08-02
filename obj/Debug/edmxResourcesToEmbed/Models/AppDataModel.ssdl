@@ -185,6 +185,8 @@
     <Property Name="voteCount" Type="int" />
     <Property Name="dateStart" Type="datetime" />
     <Property Name="dateEnd" Type="datetime" />
+    <Property Name="RdateStart" Type="datetime" />
+    <Property Name="RdateEnd" Type="datetime" />
     <Property Name="isEnable" Type="bit" />
     <Property Name="voteType" Type="nvarchar" MaxLength="50" />
   </EntityType>

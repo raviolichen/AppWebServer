@@ -27,6 +27,8 @@ namespace AppWebServer.Models
         public Nullable<bool> isEnable { get; set; }
         public string voteType { get; set; }
         public Nullable<int> voteCount { get; set; }
+        public Nullable<System.DateTime> RdateStart { get; set; }
+        public Nullable<System.DateTime> RdateEnd { get; set; }
     
         public virtual EventPage EventPage { get; set; }
         public virtual ICollection<VoteItem> VoteItem { get; set; }
