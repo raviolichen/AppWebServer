@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AppWebServer.Models.User>
+
+<table class="table">
+    <tr>
+        <th>
+           使用者名稱
+        </th>
+        <th>
+           電話
+        </th>
+        <th>
+           登入帳號
+        </th>
+        <th>
+           裝置號碼
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.userName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.loginName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.deviceId)
+        </td>
+        <td>
+            @Html.ActionLink("進入設定", "Edit", "users", new { id = item.userId }, null)
+        </td>
+    </tr>
+}
+
+</table>

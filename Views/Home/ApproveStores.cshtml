@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AppWebServer.Models.store>
+
+<table class="table">
+    <tr>
+        <th>
+            商店圖片
+        </th>
+        <th>
+            商店名稱
+        </th>
+        <th>
+            商店電話
+        </th>
+        <th>
+            地址
+        </th>
+        <th>
+            商店建立者
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.potos != null && item.potos.Length > 0)
+            {
+                <img src='@item.potos.Split(',')[0]' alt="img" style="width:100px;height:100px" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.storeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotrePhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sotreAddr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.userName)<span>|</span>@Html.DisplayFor(modelItem => item.User.loginName)
+        </td>
+        <td>
+            @Html.ActionLink("進入設定",  "Edit", "stores", new { id = item.storeId },null) 
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,18 +1,18 @@
 ﻿@model AppWebServer.Models.StoreType
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "編輯";
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>編輯</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>StoreType</h4>
+        <h4>商店類型管理</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.stId)
@@ -26,21 +26,20 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.stpotos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="control-label col-md-2"><p>圖片url</p></div>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.stpotos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.stpotos, "", new { @class = "text-danger" })
+                @Html.Action("FormatPotos", new { potos= Model.stpotos })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="儲存" class="btn btn-info" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("回到列表", "Index")
+    </div>

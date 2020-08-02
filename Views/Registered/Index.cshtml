@@ -1,0 +1,101 @@
+﻿@model AppWebServer.Models.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (Model == null)
+    {
+        <div class="input-group">
+            <div class="input-group-btn">
+                <input name="phone" type="text" id="search_textBox_keyword" class="form-control" aria-label="..." placeholder="請輸入手機號碼">
+                <input type="submit" value="查詢" name="submitButton" class="btn btn-default" style="width:50px" />
+            </div>
+        </div>
+        <span style="color:red">請注意，如要註冊商家帳號，必須先透過APP註冊手機帳號後，輸入手機號碼才能繼續註冊<br />@ViewBag.message</span>
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (Model != null)
+    {
+        <div class="form-horizontal">
+            <h4>商家註冊</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.userId)
+
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    姓名
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.userName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    手機號碼
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    登入帳號
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.loginName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.loginName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    登入密碼
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control",@type="password" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    登入密碼確認
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    裝置號碼
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.deviceId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.deviceId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="申請" name="submitButton" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+

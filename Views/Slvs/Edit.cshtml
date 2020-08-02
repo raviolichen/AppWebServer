@@ -5,14 +5,14 @@
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>編輯</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Slvs</h4>
+    <h4>銀幣管理(@ViewBag.parentName)</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.slvId)
@@ -20,7 +20,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.sname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>銀幣名稱</p></div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.sname, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.sname, "", new { @class = "text-danger" })
@@ -28,45 +28,53 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.html, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>銀幣內容</p></div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.html, new { htmlAttributes = new { @class = "form-control editor" } })
+            @Html.TextArea("html", new { id = "html", @name = "html", @class = "editor" })
             @Html.ValidationMessageFor(model => model.html, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.potos, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>圖片url</p></div>
         <div class="col-md-10">
             @Html.Action("FormatPotos", new { Model.potos })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.qrcode, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.qrcode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.qrcode, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.slvNum, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>銀幣數量(掃描後取得的數量，負數為兌換品)</p></div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.slvNum, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.slvNum, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.maxUse, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>個人可掃描次數上限</p></div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.maxUse, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.maxUse, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.isEnable, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="control-label col-md-2"><p>可被掃描次數上限</p></div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.totalmaxUse, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.totalmaxUse, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>是否可被導覽(只有可蒐藏的需要設為true)</p></div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.isGuid, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.isGuid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>是否啟用(不啟用或未設定會被掃描失敗)</p></div>
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.EditorFor(model => model.isEnable)
+                @Html.EditorFor(model => model.isEnable, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.isEnable, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,12 +82,12 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="送出" class="btn btn-info" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回到列表", "Index",new { eId=Model.eId})
 </div>

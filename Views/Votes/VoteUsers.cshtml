@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AppWebServer.Models.User>
+
+@{
+    ViewBag.Title = "投票使用者名單";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+<h2>投票使用者名單</h2>
+<table class="table">
+    <tr>
+        <th>
+            使用者編號
+        </th>
+        <th>
+            使用者名稱
+        </th>
+        <th>
+            使用者電話
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.userId.ToString("0000000000")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+
+        </tr>
+    }
+</table>
+@Html.ActionLink("返回列表", "Index", "Votes", new { eId = Request["eId"] }, null)

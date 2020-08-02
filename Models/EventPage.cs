@@ -11,8 +11,7 @@ namespace AppWebServer.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class EventPage
     {
         public EventPage()
@@ -20,25 +19,23 @@ namespace AppWebServer.Models
             this.SignForm = new HashSet<SignForm>();
             this.UserSlv = new HashSet<UserSlv>();
             this.Slvs = new HashSet<Slvs>();
+            this.Vote = new HashSet<Vote>();
         }
     
         public int eid { get; set; }
         public string url { get; set; }
         public string name { get; set; }
         public string html { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public Nullable<System.DateTime> dateStart { get ; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public Nullable<System.DateTime> dateStart { get; set; }
         public Nullable<System.DateTime> dateEnd { get; set; }
         public Nullable<int> slvLimit { get; set; }
         public Nullable<int> toGoldNum { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public Nullable<System.DateTime> postDate { get; set; }
         public string evenType { get; set; }
     
         public virtual ICollection<SignForm> SignForm { get; set; }
         public virtual ICollection<UserSlv> UserSlv { get; set; }
         public virtual ICollection<Slvs> Slvs { get; set; }
+        public virtual ICollection<Vote> Vote { get; set; }
     }
 }

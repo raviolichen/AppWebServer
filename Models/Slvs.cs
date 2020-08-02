@@ -23,6 +23,8 @@ namespace AppWebServer.Models
         public string qrcode { get; set; }
         public Nullable<int> slvNum { get; set; }
         public Nullable<int> maxUse { get; set; }
+        public Nullable<bool> isGuid { get; set; }
+        public Nullable<int> totalmaxUse { get; set; }
     
         public virtual EventPage EventPage { get; set; }
     }

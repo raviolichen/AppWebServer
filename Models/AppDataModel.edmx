@@ -41,6 +41,8 @@
           <Property Name="qrcode" Type="image" />
           <Property Name="isEnable" Type="bit" />
           <Property Name="ownerUserId" Type="int" />
+          <Property Name="totalUsetimes" Type="int" />
+          <Property Name="userUsetimes" Type="int" />
         </EntityType>
         <EntityType Name="messagePublish">
           <Key>
@@ -52,6 +54,17 @@
           <Property Name="pDateEnd" Type="datetime" />
           <Property Name="pmessage" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="ProxyDateLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="deviceId" Type="nvarchar(max)" />
+          <Property Name="data" Type="nvarchar(max)" />
+          <Property Name="proxyUserId" Type="int" />
+          <Property Name="proxyDate" Type="datetime" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
         <EntityType Name="SignForm">
           <Key>
             <PropertyRef Name="sId" />
@@ -62,7 +75,7 @@
           <Property Name="dateStart" Type="datetime" />
           <Property Name="dateEnd" Type="datetime" />
           <Property Name="field" Type="nvarchar(max)" />
-          <Property Name="isEanble" Type="bit" />
+          <Property Name="isEnable" Type="bit" />
         </EntityType>
         <EntityType Name="SignRecords">
           <Key>
@@ -85,9 +98,11 @@
           <Property Name="html" Type="nvarchar(max)" />
           <Property Name="potos" Type="nvarchar(max)" />
           <Property Name="isEnable" Type="bit" />
+          <Property Name="isGuid" Type="bit" />
           <Property Name="qrcode" Type="nvarchar(max)" />
           <Property Name="slvNum" Type="int" />
           <Property Name="maxUse" Type="int" />
+          <Property Name="totalmaxUse" Type="int" />
         </EntityType>
         <EntityType Name="store">
           <Key>
@@ -131,6 +146,7 @@
           <Property Name="token" Type="nvarchar(max)" />
           <Property Name="tokendate" Type="datetime" />
           <Property Name="goldnum" Type="int" />
+          <Property Name="prohibit" Type="datetime" />
         </EntityType>
         <EntityType Name="UserCoinReord">
           <Key>
@@ -164,6 +180,29 @@
           <Property Name="dateStart" Type="datetime" />
           <Property Name="dateEnd" Type="datetime" />
         </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="vId" />
+          </Key>
+          <Property Name="vId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vlog" Type="nvarchar(max)" />
+          <Property Name="eId" Type="int" />
+          <Property Name="voteCount" Type="int" />
+          <Property Name="dateStart" Type="datetime" />
+          <Property Name="dateEnd" Type="datetime" />
+          <Property Name="isEnable" Type="bit" />
+          <Property Name="voteType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="VoteItem">
+          <Key>
+            <PropertyRef Name="viId" />
+          </Key>
+          <Property Name="viId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemId" Type="int" />
+          <Property Name="vcount" Type="int" />
+          <Property Name="isEnable" Type="bit" />
+          <Property Name="vId" Type="int" />
+        </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'E:\CODEJOB\APPWEBSERVER\APPWEBSERVER\APP_DATA\APPDATABASE.MDF.dbo.EventSlvs' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="EventSlvs">
@@ -181,6 +220,8 @@
           <Property Name="isEnable" Type="bit" />
           <Property Name="slvNum" Type="int" />
           <Property Name="maxUse" Type="int" />
+          <Property Name="totalmaxUse" Type="int" />
+          <Property Name="isGuid" Type="bit" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'E:\CODEJOB\APPWEBSERVER\APPWEBSERVER\APP_DATA\APPDATABASE.MDF.dbo.ownerSlvsdetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -195,7 +236,33 @@
           <Property Name="potos" Type="nvarchar(max)" />
           <Property Name="dateGet" Type="datetime" />
           <Property Name="num" Type="int" />
+          <Property Name="isGuid" Type="bit" />
+          <Property Name="userId" Type="int" />
         </EntityType>
+        <Association Name="FK_Gold_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Gold" Type="Self.Gold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Gold">
+              <PropertyRef Name="ownerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProxyDateLog_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="ProxyDateLog" Type="Self.ProxyDateLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="ProxyDateLog">
+              <PropertyRef Name="proxyUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SignForm_ToTable">
           <End Role="EventPage" Type="Self.EventPage" Multiplicity="1" />
           <End Role="SignForm" Type="Self.SignForm" Multiplicity="*" />
@@ -304,11 +371,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vote_EventPage">
+          <End Role="EventPage" Type="Self.EventPage" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPage">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="eId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VoteItem_Vote">
+          <End Role="Vote" Type="Self.Vote" Multiplicity="0..1" />
+          <End Role="VoteItem" Type="Self.VoteItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vote">
+              <PropertyRef Name="vId" />
+            </Principal>
+            <Dependent Role="VoteItem">
+              <PropertyRef Name="vId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AppDataBaseModelStoreContainer">
           <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPage" EntityType="Self.EventPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gold" EntityType="Self.Gold" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="messagePublish" EntityType="Self.messagePublish" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProxyDateLog" EntityType="Self.ProxyDateLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SignForm" EntityType="Self.SignForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SignRecords" EntityType="Self.SignRecords" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slvs" EntityType="Self.Slvs" Schema="dbo" store:Type="Tables" />
@@ -318,6 +410,8 @@
           <EntitySet Name="UserCoinReord" EntityType="Self.UserCoinReord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSlv" EntityType="Self.UserSlv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoteItem" EntityType="Self.VoteItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSlvs" EntityType="Self.EventSlvs" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [EventSlvs].[eid] AS [eid], 
@@ -329,7 +423,9 @@
 [EventSlvs].[slvId] AS [slvId], 
 [EventSlvs].[isEnable] AS [isEnable], 
 [EventSlvs].[slvNum] AS [slvNum], 
-[EventSlvs].[maxUse] AS [maxUse]
+[EventSlvs].[maxUse] AS [maxUse], 
+[EventSlvs].[totalmaxUse] AS [totalmaxUse], 
+[EventSlvs].[isGuid] AS [isGuid]
 FROM [dbo].[EventSlvs] AS [EventSlvs]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ownerSlvsdetail" EntityType="Self.ownerSlvsdetail" store:Type="Views" store:Schema="dbo">
@@ -339,9 +435,19 @@ FROM [dbo].[EventSlvs] AS [EventSlvs]</DefiningQuery>
 [ownerSlvsdetail].[slvId] AS [slvId], 
 [ownerSlvsdetail].[potos] AS [potos], 
 [ownerSlvsdetail].[dateGet] AS [dateGet], 
-[ownerSlvsdetail].[num] AS [num]
+[ownerSlvsdetail].[num] AS [num], 
+[ownerSlvsdetail].[isGuid] AS [isGuid], 
+[ownerSlvsdetail].[userId] AS [userId]
 FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Gold_ToUser" Association="Self.FK_Gold_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Gold" EntitySet="Gold" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProxyDateLog_User" Association="Self.FK_ProxyDateLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ProxyDateLog" EntitySet="ProxyDateLog" />
+          </AssociationSet>
           <AssociationSet Name="FK_SignForm_ToTable" Association="Self.FK_SignForm_ToTable">
             <End Role="EventPage" EntitySet="EventPage" />
             <End Role="SignForm" EntitySet="SignForm" />
@@ -377,6 +483,14 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <AssociationSet Name="FK_UserSlv_ToUser" Association="Self.FK_UserSlv_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="UserSlv" EntitySet="UserSlv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vote_EventPage" Association="Self.FK_Vote_EventPage">
+            <End Role="EventPage" EntitySet="EventPage" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VoteItem_Vote" Association="Self.FK_VoteItem_Vote">
+            <End Role="Vote" EntitySet="Vote" />
+            <End Role="VoteItem" EntitySet="VoteItem" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -435,6 +549,25 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
             <End Role="Slvs" EntitySet="Slvs" />
           </AssociationSet>
           <EntitySet Name="ownerSlvsdetail" EntityType="AppDataBaseModel.ownerSlvsdetail" />
+          <AssociationSet Name="FK_Gold_ToUser" Association="AppDataBaseModel.FK_Gold_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Gold" EntitySet="Gold" />
+          </AssociationSet>
+          <EntitySet Name="Vote" EntityType="AppDataBaseModel.Vote" />
+          <EntitySet Name="VoteItem" EntityType="AppDataBaseModel.VoteItem" />
+          <AssociationSet Name="FK_Vote_EventPage" Association="AppDataBaseModel.FK_Vote_EventPage">
+            <End Role="EventPage" EntitySet="EventPage" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VoteItem_Vote" Association="AppDataBaseModel.FK_VoteItem_Vote">
+            <End Role="Vote" EntitySet="Vote" />
+            <End Role="VoteItem" EntitySet="VoteItem" />
+          </AssociationSet>
+          <EntitySet Name="ProxyDateLog" EntityType="AppDataBaseModel.ProxyDateLog" />
+          <AssociationSet Name="FK_ProxyDateLog_User" Association="AppDataBaseModel.FK_ProxyDateLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ProxyDateLog" EntitySet="ProxyDateLog" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Banner">
           <Key>
@@ -462,6 +595,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="SignForm" Relationship="AppDataBaseModel.FK_SignForm_ToTable" FromRole="EventPage" ToRole="SignForm" />
           <NavigationProperty Name="UserSlv" Relationship="AppDataBaseModel.FK_UserSlv_ToEventPage" FromRole="EventPage" ToRole="UserSlv" />
           <NavigationProperty Name="Slvs" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="EventPage" ToRole="Slvs" />
+          <NavigationProperty Name="Vote" Relationship="AppDataBaseModel.FK_Vote_EventPage" FromRole="EventPage" ToRole="Vote" />
         </EntityType>
         <EntityType Name="SignForm">
           <Key>
@@ -473,9 +607,9 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="dateStart" Type="DateTime" Precision="3" />
           <Property Name="dateEnd" Type="DateTime" Precision="3" />
           <Property Name="field" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="isEanble" Type="Boolean" />
           <NavigationProperty Name="EventPage" Relationship="AppDataBaseModel.FK_SignForm_ToTable" FromRole="SignForm" ToRole="EventPage" />
           <NavigationProperty Name="SignRecords" Relationship="AppDataBaseModel.FK_SingRecords_ToSign" FromRole="SignForm" ToRole="SignRecords" />
+          <Property Name="isEnable" Type="Boolean" />
         </EntityType>
         <EntityType Name="SignRecords">
           <Key>
@@ -510,6 +644,9 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="goldnum" Type="Int32" />
           <NavigationProperty Name="store" Relationship="AppDataBaseModel.FK_store_ToUser" FromRole="User" ToRole="store" />
           <NavigationProperty Name="UserCoinReord" Relationship="AppDataBaseModel.FK_UserCoinReord_ToUser" FromRole="User" ToRole="UserCoinReord" />
+          <NavigationProperty Name="Gold" Relationship="AppDataBaseModel.FK_Gold_ToUser" FromRole="User" ToRole="Gold" />
+          <Property Name="prohibit" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProxyDateLog" Relationship="AppDataBaseModel.FK_ProxyDateLog_User" FromRole="User" ToRole="ProxyDateLog" />
         </EntityType>
         <EntityType Name="UserSlv">
           <Key>
@@ -598,6 +735,9 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="qrcode" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="isEnable" Type="Boolean" />
           <Property Name="ownerUserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_Gold_ToUser" FromRole="Gold" ToRole="User" />
+          <Property Name="totalUsetimes" Type="Int32" />
+          <Property Name="userUsetimes" Type="Int32" />
         </EntityType>
         <EntityType Name="messagePublish">
           <Key>
@@ -709,6 +849,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="isEnable" Type="Boolean" />
           <Property Name="slvNum" Type="Int32" />
           <Property Name="maxUse" Type="Int32" />
+          <Property Name="totalmaxUse" Type="Int32" />
+          <Property Name="isGuid" Type="Boolean" />
         </EntityType>
         <EntityType Name="Slvs">
           <Key>
@@ -724,6 +866,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="slvNum" Type="Int32" />
           <Property Name="maxUse" Type="Int32" />
           <NavigationProperty Name="EventPage" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="Slvs" ToRole="EventPage" />
+          <Property Name="isGuid" Type="Boolean" />
+          <Property Name="totalmaxUse" Type="Int32" />
         </EntityType>
         <Association Name="FK_Slv_ToEventPage">
           <End Type="AppDataBaseModel.EventPage" Role="EventPage" Multiplicity="1" />
@@ -748,7 +892,95 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <Property Name="dateGet" Type="DateTime" Precision="3" />
           <Property Name="num" Type="Int32" />
           <Property Name="eId" Type="Int32" Nullable="false" />
+          <Property Name="isGuid" Type="Boolean" />
+          <Property Name="userId" Type="Int32" />
         </EntityType>
+        <Association Name="FK_Gold_ToUser">
+          <End Type="AppDataBaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="AppDataBaseModel.Gold" Role="Gold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Gold">
+              <PropertyRef Name="ownerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="vId" />
+          </Key>
+          <Property Name="vId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vlog" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eId" Type="Int32" />
+          <Property Name="dateStart" Type="DateTime" Precision="3" />
+          <Property Name="dateEnd" Type="DateTime" Precision="3" />
+          <Property Name="isEnable" Type="Boolean" />
+          <NavigationProperty Name="EventPage" Relationship="AppDataBaseModel.FK_Vote_EventPage" FromRole="Vote" ToRole="EventPage" />
+          <NavigationProperty Name="VoteItem" Relationship="AppDataBaseModel.FK_VoteItem_Vote" FromRole="Vote" ToRole="VoteItem" />
+          <Property Name="voteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="voteCount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="VoteItem">
+          <Key>
+            <PropertyRef Name="viId" />
+          </Key>
+          <Property Name="viId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemId" Type="Int32" />
+          <Property Name="vcount" Type="Int32" />
+          <Property Name="isEnable" Type="Boolean" />
+          <Property Name="vId" Type="Int32" />
+          <NavigationProperty Name="Vote" Relationship="AppDataBaseModel.FK_VoteItem_Vote" FromRole="VoteItem" ToRole="Vote" />
+        </EntityType>
+        <Association Name="FK_Vote_EventPage">
+          <End Type="AppDataBaseModel.EventPage" Role="EventPage" Multiplicity="0..1" />
+          <End Type="AppDataBaseModel.Vote" Role="Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPage">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="eId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VoteItem_Vote">
+          <End Type="AppDataBaseModel.Vote" Role="Vote" Multiplicity="0..1" />
+          <End Type="AppDataBaseModel.VoteItem" Role="VoteItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vote">
+              <PropertyRef Name="vId" />
+            </Principal>
+            <Dependent Role="VoteItem">
+              <PropertyRef Name="vId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProxyDateLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="deviceId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="proxyUserId" Type="Int32" />
+          <Property Name="proxyDate" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_ProxyDateLog_User" FromRole="ProxyDateLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_ProxyDateLog_User">
+          <End Type="AppDataBaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="AppDataBaseModel.ProxyDateLog" Role="ProxyDateLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="ProxyDateLog">
+              <PropertyRef Name="proxyUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -784,7 +1016,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="SignForm">
             <EntityTypeMapping TypeName="AppDataBaseModel.SignForm">
               <MappingFragment StoreEntitySet="SignForm">
-                <ScalarProperty Name="isEanble" ColumnName="isEanble" />
+                <ScalarProperty Name="isEnable" ColumnName="isEnable" />
                 <ScalarProperty Name="field" ColumnName="field" />
                 <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
                 <ScalarProperty Name="dateStart" ColumnName="dateStart" />
@@ -808,6 +1040,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="AppDataBaseModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="prohibit" ColumnName="prohibit" />
                 <ScalarProperty Name="goldnum" ColumnName="goldnum" />
                 <ScalarProperty Name="tokendate" ColumnName="tokendate" />
                 <ScalarProperty Name="token" ColumnName="token" />
@@ -839,6 +1072,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="Gold">
             <EntityTypeMapping TypeName="AppDataBaseModel.Gold">
               <MappingFragment StoreEntitySet="Gold">
+                <ScalarProperty Name="userUsetimes" ColumnName="userUsetimes" />
+                <ScalarProperty Name="totalUsetimes" ColumnName="totalUsetimes" />
                 <ScalarProperty Name="ownerUserId" ColumnName="ownerUserId" />
                 <ScalarProperty Name="isEnable" ColumnName="isEnable" />
                 <ScalarProperty Name="qrcode" ColumnName="qrcode" />
@@ -913,6 +1148,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="EventSlvs">
             <EntityTypeMapping TypeName="AppDataBaseModel.EventSlvs">
               <MappingFragment StoreEntitySet="EventSlvs">
+                <ScalarProperty Name="isGuid" ColumnName="isGuid" />
+                <ScalarProperty Name="totalmaxUse" ColumnName="totalmaxUse" />
                 <ScalarProperty Name="maxUse" ColumnName="maxUse" />
                 <ScalarProperty Name="slvNum" ColumnName="slvNum" />
                 <ScalarProperty Name="isEnable" ColumnName="isEnable" />
@@ -929,6 +1166,8 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="Slvs">
             <EntityTypeMapping TypeName="AppDataBaseModel.Slvs">
               <MappingFragment StoreEntitySet="Slvs">
+                <ScalarProperty Name="totalmaxUse" ColumnName="totalmaxUse" />
+                <ScalarProperty Name="isGuid" ColumnName="isGuid" />
                 <ScalarProperty Name="maxUse" ColumnName="maxUse" />
                 <ScalarProperty Name="slvNum" ColumnName="slvNum" />
                 <ScalarProperty Name="qrcode" ColumnName="qrcode" />
@@ -944,12 +1183,51 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="ownerSlvsdetail">
             <EntityTypeMapping TypeName="AppDataBaseModel.ownerSlvsdetail">
               <MappingFragment StoreEntitySet="ownerSlvsdetail">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="isGuid" ColumnName="isGuid" />
                 <ScalarProperty Name="eId" ColumnName="eId" />
                 <ScalarProperty Name="num" ColumnName="num" />
                 <ScalarProperty Name="dateGet" ColumnName="dateGet" />
                 <ScalarProperty Name="potos" ColumnName="potos" />
                 <ScalarProperty Name="slvId" ColumnName="slvId" />
                 <ScalarProperty Name="sname" ColumnName="sname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vote">
+            <EntityTypeMapping TypeName="AppDataBaseModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="voteCount" ColumnName="voteCount" />
+                <ScalarProperty Name="voteType" ColumnName="voteType" />
+                <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+                <ScalarProperty Name="eId" ColumnName="eId" />
+                <ScalarProperty Name="vlog" ColumnName="vlog" />
+                <ScalarProperty Name="vId" ColumnName="vId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteItem">
+            <EntityTypeMapping TypeName="AppDataBaseModel.VoteItem">
+              <MappingFragment StoreEntitySet="VoteItem">
+                <ScalarProperty Name="vId" ColumnName="vId" />
+                <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+                <ScalarProperty Name="vcount" ColumnName="vcount" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="viId" ColumnName="viId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProxyDateLog">
+            <EntityTypeMapping TypeName="AppDataBaseModel.ProxyDateLog">
+              <MappingFragment StoreEntitySet="ProxyDateLog">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="proxyDate" ColumnName="proxyDate" />
+                <ScalarProperty Name="proxyUserId" ColumnName="proxyUserId" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="deviceId" ColumnName="deviceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

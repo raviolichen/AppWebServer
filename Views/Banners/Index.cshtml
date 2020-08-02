@@ -5,20 +5,20 @@
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>廣告管理</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
         <th>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateStart)
+            廣告日期起
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateEnd)
+            廣告日期迄
         </th>
         <th></th>
     </tr>
@@ -32,14 +32,25 @@
             }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateStart)
+            @if (item.dateStart != null)
+            {
+                @item.dateStart.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateEnd)
+            @if (item.dateEnd != null)
+            {
+                @item.dateEnd.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @using (Html.BeginForm("Delete", "Banners"))
+            {
+                @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-info" }) <span>|</span>
+                @Html.AntiForgeryToken();
+                <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                <input type="hidden" name="id" value="@(item.Id)" />
+            }
         </td>
     </tr>
 }

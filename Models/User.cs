@@ -20,6 +20,8 @@ namespace AppWebServer.Models
             this.UserSlv = new HashSet<UserSlv>();
             this.store = new HashSet<store>();
             this.UserCoinReord = new HashSet<UserCoinReord>();
+            this.Gold = new HashSet<Gold>();
+            this.ProxyDateLog = new HashSet<ProxyDateLog>();
         }
     
         public int userId { get; set; }
@@ -34,10 +36,13 @@ namespace AppWebServer.Models
         public string token { get; set; }
         public Nullable<System.DateTime> tokendate { get; set; }
         public Nullable<int> goldnum { get; set; }
+        public Nullable<System.DateTime> prohibit { get; set; }
     
         public virtual ICollection<SignRecords> SignRecords { get; set; }
         public virtual ICollection<UserSlv> UserSlv { get; set; }
         public virtual ICollection<store> store { get; set; }
         public virtual ICollection<UserCoinReord> UserCoinReord { get; set; }
+        public virtual ICollection<Gold> Gold { get; set; }
+        public virtual ICollection<ProxyDateLog> ProxyDateLog { get; set; }
     }
 }

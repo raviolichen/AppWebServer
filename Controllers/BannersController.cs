@@ -10,6 +10,7 @@ using AppWebServer.Models;
 
 namespace AppWebServer.Controllers
 {
+    [Authorize(Roles = "admin,manage")]
     public class BannersController : Controller
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
@@ -17,7 +18,7 @@ namespace AppWebServer.Controllers
         // GET: Banners
         public ActionResult Index()
         {
-            return View(db.Banner.ToList());
+            return View(db.Banner.OrderByDescending(o => o.Id).ToList());
         }
 
         // GET: Banners/Details/5

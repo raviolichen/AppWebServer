@@ -20,5 +20,7 @@ namespace AppWebServer.Models
         public Nullable<System.DateTime> dateGet { get; set; }
         public Nullable<int> num { get; set; }
         public int eId { get; set; }
+        public Nullable<bool> isGuid { get; set; }
+        public Nullable<int> userId { get; set; }
     }
 }

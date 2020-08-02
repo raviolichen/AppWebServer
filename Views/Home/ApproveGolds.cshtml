@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AppWebServer.Models.Gold>
+<table class="table">
+    <tr>
+        <th>
+            圖片
+        </th>
+        <th>
+            金幣名稱
+        </th>
+        <th>
+            金幣數量
+        </th>
+        <th>
+            總額數量
+        </th>
+        <th>
+            限制次數
+        </th>
+        <th>
+            金幣建立者
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.potos != null && item.potos.Length > 0)
+            {
+                <img src="@item.potos.Split(',')[0]" alt="img" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.goldname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.goldnum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalUsetimes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userUsetimes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.userName)<span>|</span>@Html.DisplayFor(modelItem => item.User.loginName)
+        </td>
+        <td>
+            @Html.ActionLink("進入設定", "edit", "golds", new { id = item.goldId },null) 
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,4 +1,5 @@
-﻿using AppWebServer.Models;
+﻿using AppWebServer.Controllers.exchangModels;
+using AppWebServer.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,47 +18,30 @@ namespace AppWebServer.Controllers
         private AppDataBaseEntities db = new AppDataBaseEntities();
         public HttpResponseMessage GetHomePageJson()
         {
-            HomePageJSON homePageJSON = new HomePageJSON();
-            homePageJSON.EventList = new List<EventItem>();
-            homePageJSON.Banner = new List<string>();
+            HomePageJSON homePageJSON = new HomePageJSON
+            {
+                EventList = new List<EventItem>(),
+                Banner = new List<string>()
+            };
             if (db.Banner.Count() > 0)
             {
-                foreach (Banner banner in db.Banner.ToList())
+                foreach (Banner banner in db.Banner.OrderByDescending(o=>o.Id).ToList())
                 {
-                    homePageJSON.Banner.Add(banner.url);
+                    if(banner.dateStart <= DateTime.Now && banner.dateEnd.Value.AddDays(1) >= DateTime.Now)
+                        homePageJSON.Banner.Add(banner.url);
                 }
             }
             if (db.EventPage.Count() > 0)
             {
-                foreach (EventPage eventPage in db.EventPage.ToList())
+                foreach (EventPage eventPage in db.EventPage.OrderByDescending(o => o.eid).ToList())
                 {
-                    homePageJSON.EventList.Add(new EventItem(eventPage.eid, eventPage.url, eventPage.name, eventPage.postDate.Value.ToString("yyyy-MM-dd"), ""));
+                    if (eventPage.dateStart <= DateTime.Now && eventPage.dateEnd.Value.AddDays(1) >= DateTime.Now)
+                        homePageJSON.EventList.Add(new EventItem(eventPage.eid, eventPage.url, eventPage.name, eventPage.postDate.Value.ToString("yyyy-MM-dd"), ""));
                 }
             }
             string str = JsonConvert.SerializeObject(homePageJSON);
             return  new HttpResponseMessage { Content = new StringContent("["+str+"]", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
 
-    }
-    class HomePageJSON
-    {
-       public List<String> Banner { get; set; }
-        public List<EventItem> EventList { get; set; }
-    }
-    class EventItem
-    {
-        public int eId { get; set; }
-        public string url { get; set; }
-        public string title { get; set; }
-        public string date { get; set; }
-        public string text { get; set; }
-        public EventItem(int eId, string url,string title, string date,string text)
-        {
-            this. eId=eId;
-            this. url=url;
-            this. title=title;
-            this. date=date;
-            this. text=text;
-        }
     }
 }

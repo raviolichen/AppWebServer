@@ -1,0 +1,125 @@
+﻿@model IEnumerable<AppWebServer.Models.SignRecords>
+
+@{
+    ViewBag.Title = "活動報名紀錄";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>活動報名紀錄</h2>
+<form asp-controller="SignRecords" asp-action="Index" method="post">
+    <div class="navbar-form nopront" style="padding-left:0px;margin-left:0px">
+
+        <div class="input-group">
+            <div class="input-group-btn">
+                <select name="search_isComplete" id="search_isComplete" class="form-control">
+                    @if (ViewBag.search_isComplete != null && !ViewBag.search_isComplete.Contains("all"))
+                    {
+                        bool isComplete = bool.Parse(Request["search_isComplete"]);
+                        if (isComplete)
+                        {
+                            <option value="all">全部</option>
+                            <option value="false">未完成</option>
+                            <option value="true" selected="selected">已完成</option>
+                        }
+                        else
+                        {
+                            <option value="all">全部</option>
+                            <option value="false" selected="selected">未完成</option>
+                            <option value="true">已完成</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="all">全部</option>
+                        <option value="false">未完成</option>
+                        <option value="true">已完成</option>
+                    }
+                </select>
+                <input name="search_textBox_keyword" type="text" id="search_textBox_keyword" value='@(ViewBag.search_textBox_keyword??ViewBag.search_textBox_keyword)' class="form-control" aria-label="..." placeholder="請輸入搜尋關鍵字">
+                <input type="submit" value="搜尋" name="submitButton" class="btn btn-default" style="width:50px" />
+            </div>
+            <!-- /btn-group -->
+        </div>
+        <!-- /input-group -->
+
+
+    </div>
+
+    <table class="table">
+        <tr>
+            <th style="width:50px">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="AllCheck">
+                </div>
+                <script>
+                    $('#AllCheck').click(function () {
+                        $('input[type=checkbox]').each(function () {
+                            $(this).prop('checked', $('#AllCheck').prop('checked'));
+                        });
+                    });
+                </script>
+            </th>
+            <th>
+                使用者名稱
+            </th>
+            <th>
+                使用者電話
+            </th>
+            @Html.Action("FormatFeildName", new { Id = ViewBag.id })
+            <th>
+                是否完成
+            </th>
+            <th>
+                完成時間
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" value="@item.userId" name="prohibit_checks">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.userName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.phone)
+                </td>
+                @Html.Action("FormatFeildValue", new { valueJson = item.signData })
+                <td>
+                    @Html.DisplayFor(modelItem => item.isComplete)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.completeDatetime)
+                </td>
+                <td>
+                    @using (Html.BeginForm("Delete", "SignRecords"))
+                    {
+                        @Html.ActionLink("編輯", "Edit", new { userId = item.userId, sId = item.sId }, new { @class = "btn btn-info" }) <span>|</span>
+                        @Html.AntiForgeryToken();
+                        <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                        <input type="hidden" name="userId" value="@(item.userId)" />
+                        <input type="hidden" name="sId" value="@(item.sId)" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="navbar navbar-light bg-light">
+        <div class="form-inline">
+            <div class='input-group datepicker date'>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input type="datetime" value="@(DateTime.Now.ToString("yyyy/MM/dd"))" name="prohibit" id="prohibit" class="form-control" />
+            </div>
+            <input type="submit" value="設定停權" name="submitButton" class="btn btn-default" style="width:100px" />
+        </div>
+    </div>
+    <!-- /input-group -->
+</form>
+
+<p>
+    @Html.ActionLink("返回列表", "Index", "SignForms", new { eId = Request["eId"] }, null)
+</p>

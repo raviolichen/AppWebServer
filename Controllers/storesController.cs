@@ -12,17 +12,22 @@ using Newtonsoft.Json.Linq;
 
 namespace AppWebServer.Controllers
 {
+    [Authorize(Roles = "admin,manage,store")]
     public class storesController : Controller
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
-
         // GET: stores
         public ActionResult Index()
         {
-            var store = db.store.Include(s => s.StoreType).Include(s => s.User);
-            return View(store.ToList());
+            if (User.IsInRole("store"))
+            {
+                int userId = int.Parse(User.Identity.Name);
+                var store = db.store.Where(i => i.ownerUser == userId);
+                return View(store.OrderByDescending(o => o.storeId));//.Include(s => s.StoreType).Include(s => s.User);
+            }
+            else
+                return View(db.store.Include(s => s.StoreType).Include(s => s.User).OrderByDescending(o=>o.storeId));
         }
-
         public string FormatPotos(string potos)
         {
 
@@ -79,6 +84,7 @@ namespace AppWebServer.Controllers
             return "";
         }
         // GET: stores/Details/5
+        /*
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -92,7 +98,7 @@ namespace AppWebServer.Controllers
             }
             return View(store);
         }
-
+        */
         // GET: stores/Create
         public ActionResult Create()
         {
@@ -100,7 +106,6 @@ namespace AppWebServer.Controllers
             ViewBag.ownerUser = new SelectList(db.User, "userId", "userName");
             return View();
         }
-
         // POST: stores/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
@@ -111,6 +116,10 @@ namespace AppWebServer.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("store"))
+                {
+                    store.ownerUser =int.Parse( User.Identity.Name);
+                }
                 db.store.Add(store);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -151,7 +160,10 @@ namespace AppWebServer.Controllers
 
                 store.potos = formatpotoString(store);
                 store.products = formatproductString(store);
-
+                if (User.IsInRole("store"))
+                {
+                    store.ownerUser = int.Parse(User.Identity.Name);
+                }
                 db.Entry(store).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -175,7 +187,6 @@ namespace AppWebServer.Controllers
             }
             return View(store);
         }
-
         // POST: stores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

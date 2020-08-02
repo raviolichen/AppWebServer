@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>活動管理</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
@@ -48,16 +48,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img src='@Html.DisplayFor(modelItem => item.url)' alt='img' style="width:100px;height:100px"/>
+            <img src='@Html.DisplayFor(modelItem => item.url)' alt='img' style="width:100px;height:100px" />
         </td>
         <td>
             @Html.ActionLink(item.name, "Edit", new { id = item.eid })
         </td>
         <td>
-           @Html.DisplayFor(modelItem => item.dateStart)
+            @if (item.dateStart != null)
+            {
+                @item.dateStart.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateEnd)
+            @if (item.dateEnd != null)
+            {
+                @item.dateEnd.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.slvLimit)
@@ -72,13 +78,21 @@
             @Html.DisplayFor(modelItem => item.evenType)
         </td>
         <td>
-            @Html.ActionLink("銀幣管理", "Index", "Slvs", new { eId = item.eid }, null)
+            @Html.ActionLink("銀幣管理", "Index", "Slvs", new { eId = item.eid }, new { @class = "btn btn-info" })
         </td>
         <td>
-            @Html.ActionLink("報名管理", "Index", "SignForms", new { eid = item.eid }, null)
+            @Html.ActionLink("報名管理", "Index", "SignForms", new { eid = item.eid }, new { @class = "btn btn-info" })
         </td>
         <td>
-            @Html.ActionLink("刪除", "Delete", new { id = item.eid })
+            @Html.ActionLink("票選管理", "Index", "Votes", new { eid = item.eid }, new { @class = "btn btn-info" })
+        </td>
+        <td>
+            @using (Html.BeginForm("Delete", "EventPages"))
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                <input type="hidden" name="id" value="@(item.eid)" />
+            }
         </td>
     </tr>
 }

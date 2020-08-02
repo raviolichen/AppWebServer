@@ -1,0 +1,78 @@
+﻿@model AppWebServer.Models.Vote
+
+@{
+    ViewBag.Title = "編輯";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>編輯</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>票選管理</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.vId)
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>票選類型</p></div>
+        <div class="col-md-10">
+            @Html.DropDownList("voteType", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.voteType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>票數</p></div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.voteCount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.voteCount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>活動日期起</p></div>
+        <div class="col-md-10">
+            <div class='input-group datepicker date'>
+                <input type="datetime" value="@(Model.dateStart==null?DateTime.Now.ToString("yyyy/MM/dd"):Model.dateStart.Value.ToString("yyyy/MM/dd"))" name="dateStart" id="dateStart" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>活動日期迄</p></div>
+        <div class="col-md-10">
+            <div class='input-group datepicker date'>
+                <input type="datetime" value="@(Model.dateEnd==null?DateTime.Now.ToString("yyyy/MM/dd"):Model.dateEnd.Value.ToString("yyyy/MM/dd"))" name="dateEnd" id="dateEnd" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"><p>是否啟用</p></div>
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.isEnable, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.isEnable, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="送出" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+    <div>
+        @Html.ActionLink("回到列表", "Index", new { eid = Request["eid"].ToString() })
+    </div>

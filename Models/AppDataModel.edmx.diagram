@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e219b5bda30e4b75bb2bcee9216076c5" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="e219b5bda30e4b75bb2bcee9216076c5" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="AppDataBaseModel.Banner" Width="1.5" PointX="5.75" PointY="1.625" />
         <EntityTypeShape EntityType="AppDataBaseModel.EventPage" Width="1.5" PointX="1.5" PointY="0.75" />
-        <EntityTypeShape EntityType="AppDataBaseModel.SignForm" Width="1.5" PointX="3.75" PointY="1.25" />
+        <EntityTypeShape EntityType="AppDataBaseModel.SignForm" Width="1.5" PointX="3.75" PointY="0.875" />
         <EntityTypeShape EntityType="AppDataBaseModel.SignRecords" Width="1.5" PointX="6" PointY="5.5" />
         <EntityTypeShape EntityType="AppDataBaseModel.User" Width="1.5" PointX="0.75" PointY="8.5" />
         <EntityTypeShape EntityType="AppDataBaseModel.UserSlv" Width="1.5" PointX="5" PointY="14.375" />
@@ -20,7 +20,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="AppDataBaseModel.store" Width="1.5" PointX="6" PointY="8.875" />
         <EntityTypeShape EntityType="AppDataBaseModel.Gold" Width="1.5" PointX="7.75" PointY="1.625" />
-        <EntityTypeShape EntityType="AppDataBaseModel.messagePublish" Width="1.5" PointX="8.75" PointY="5.625" />
+        <EntityTypeShape EntityType="AppDataBaseModel.messagePublish" Width="1.5" PointX="8" PointY="5.375" />
         <EntityTypeShape EntityType="AppDataBaseModel.StoreType" Width="1.5" PointX="7.625" PointY="15.75" />
         <EntityTypeShape EntityType="AppDataBaseModel.UserGroup" Width="1.5" PointX="8.75" PointY="8.625" />
         <AssociationConnector Association="AppDataBaseModel.FK_store_ToStoreType" />
@@ -30,7 +30,14 @@
         <EntityTypeShape EntityType="AppDataBaseModel.EventSlvs" Width="1.5" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="AppDataBaseModel.Slvs" Width="1.5" PointX="3.75" PointY="5" />
         <AssociationConnector Association="AppDataBaseModel.FK_Slv_ToEventPage" />
-        <EntityTypeShape EntityType="AppDataBaseModel.ownerSlvsdetail" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="AppDataBaseModel.ownerSlvsdetail" Width="1.5" PointX="10" PointY="4.375" />
+        <AssociationConnector Association="AppDataBaseModel.FK_Gold_ToUser" />
+        <EntityTypeShape EntityType="AppDataBaseModel.Vote" Width="1.5" PointX="3.75" PointY="18.25" />
+        <EntityTypeShape EntityType="AppDataBaseModel.VoteItem" Width="1.5" PointX="6" PointY="18.375" />
+        <AssociationConnector Association="AppDataBaseModel.FK_Vote_EventPage" />
+        <AssociationConnector Association="AppDataBaseModel.FK_VoteItem_Vote" />
+        <EntityTypeShape EntityType="AppDataBaseModel.ProxyDateLog" Width="1.5" PointX="3" PointY="22.625" />
+        <AssociationConnector Association="AppDataBaseModel.FK_ProxyDateLog_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

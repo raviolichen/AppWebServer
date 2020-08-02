@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
-
+<h2>銀幣管理</h2>
+<h4>@ViewBag.parentName</h4>
 <p>
-    @Html.ActionLink("Create New", "Create",new {eId=Request["eId"] })
+    @Html.ActionLink("新增", "Create",new {eId=Request["eId"] }, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
@@ -25,7 +25,13 @@
             可重複使用次數
         </th>
         <th>
+            剩餘次數
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.qrcode)
+        </th>
+        <th>
+            是否需要導覽
         </th>
         <th>
             是否啟用
@@ -51,13 +57,24 @@
             @Html.DisplayFor(modelItem => item.maxUse)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.qrcode)
+            @Html.Action("GetSlvsRem", new { item.slvId, item.totalmaxUse })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.isEnable)
+            <img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=slvs,@(item.slvId)&chld=L|4" alt="img" />
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { id = item.slvId })
+            @Html.DisplayFor(modelItem => item.isGuid, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isEnable, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @using (Html.BeginForm("Delete", "Slvs"))
+            {
+                @Html.AntiForgeryToken();
+                <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                <input type="hidden" name="Id" value="@(item.slvId)" />
+            }
         </td>
     </tr>
 }
