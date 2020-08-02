@@ -23,10 +23,12 @@ namespace AppWebServer.Controllers
         {
             SHA512 token = new SHA512CryptoServiceProvider();
             User user = null;
+            string[] data = deviceId.Split(':');
+            bool isOnlyUserData =bool.Parse(data[1]);
+            deviceId = data[0];
             if (db.User.ToList().Count > 0)
                 user = db.User.SqlQuery("SELECT * FROM [User] WHERE deviceId LIKE +'" + deviceId + "'").FirstOrDefault();
             string _messagePublishes="";
-
             if (user == null)
             {
                 // user = new User { deviceId = deviceId,token= Convert.ToBase64String(crypto),tokendate=DateTime.Now.AddHours(4) };
@@ -59,18 +61,18 @@ namespace AppWebServer.Controllers
                     }
                     catch { }
                 }
-                List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now && 
-                (i.p_users.ToLower().CompareTo("all") == 0||i.p_users.Contains(user.userId+",")||i.p_users.CompareTo(user.powerGroup.Value.ToString())==0)).ToList();
-                foreach (messagePublish messages in messagePublishs)
+                if (!isOnlyUserData)
                 {
-                    _messagePublishes += "‧" + messages.pmessage + "\n\n";
+                    List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now &&
+                    (i.p_users.ToLower().CompareTo("all") == 0 || i.p_users.Contains(user.userId + ",") || i.p_users.CompareTo(user.powerGroup.Value.ToString()) == 0)).ToList();
+                    foreach (messagePublish messages in messagePublishs)
+                    {
+                        _messagePublishes += "‧" + messages.pmessage + "\n\n";
+                    }
                 }
                 UserData userData = new UserData(user.userName, user.userId.ToString(), Convert.ToBase64String(crypto), proxy.ToString(), user.goldnum.ToString(), "true", _messagePublishes);
                 return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(userData), Encoding.GetEncoding("UTF-8"), "application/json") };
             }
-
-
-
         }
         [HttpPost]
         public HttpResponseMessage PostUser([FromBody] string data)
