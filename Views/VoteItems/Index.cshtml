@@ -1,0 +1,94 @@
+﻿@model IEnumerable<AppWebServer.Models.VoteItem>
+
+@{
+    ViewBag.Title = "票選項次";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>票選項次管理</h2>
+<table class="table">
+    <tr>
+        <th>
+            圖片
+        </th>
+        <th>
+            名稱
+        </th>
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <th>
+                票數
+            </th>
+        }
+        <th>
+            審核狀態
+        </th>
+
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        @{
+            Html.RenderAction("Create", new { vId = int.Parse(ViewData["Id"].ToString()) });
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @{
+                Html.RenderAction("GetItemNameAndPotos", new { voteItem = item });
+            }
+            @if (User.IsInRole("admin") || User.IsInRole("manage"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.vcount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isEnable)
+                </td>
+
+                <td style="width:60px;">
+                    @Html.ActionLink("編輯", "Edit", new { id = item.viId }, new { @class = "btn btn-info" })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @if (item.isEnable == null)
+                    {
+                        <span>審核中</span>
+                    }
+                    else if (item.isEnable.Value)
+                    {
+                        <span>已通過</span>
+                    }
+                    else
+                    {
+                        <span>未通過</span>
+                    }
+                </td>
+            }
+            <td style="width:60px;">
+                @using (Html.BeginForm("Delete", "voteitems"))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                    <input type="hidden" name="id" value="@(item.viId)" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+@if (User.IsInRole("admin") || User.IsInRole("manage"))
+{
+    <p>
+        @Html.ActionLink("返回列表", "Index", "Votes", new { eId = Request["eId"] }, null)
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("返回列表", "", "Home")
+    </p>
+}

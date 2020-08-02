@@ -1,0 +1,31 @@
+﻿@model AppWebServer.Models.VoteItem
+
+@using (Html.BeginForm("Create", "VoteItems"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.vId)
+    @Html.ValidationMessageFor(model => model.vId, "", new { @class = "text-danger" })
+    <td>
+
+    </td>
+    <td>
+        @Html.DropDownList("itemId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.itemId, "", new { @class = "text-danger" })
+    </td>
+    if (User.IsInRole("admin") || User.IsInRole("manage"))
+    {
+        <td>
+            <p>0</p>
+        </td>
+        <td>
+            @Html.EditorFor(model => model.isEnable, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.isEnable, "", new { @class = "text-danger" })
+        </td>
+    }
+
+    <td></td>
+    <td>
+        <input type="submit" value="新增" class="btn btn-default" />
+    </td>
+}

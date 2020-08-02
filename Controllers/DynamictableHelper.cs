@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace AppWebServer.Controllers
 {
+    [Authorize]
     public class DynamictableHelper
     {
       static  public string GetDynamictable(List<string[]> value, List<string> title, string tableName)

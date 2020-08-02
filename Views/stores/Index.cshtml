@@ -1,51 +1,67 @@
 ﻿@model IEnumerable<AppWebServer.Models.store>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "商店管理";
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>商店管理</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("admin") || User.IsInRole("manage"))
+    {
+        @Html.ActionLink("商店類型管理","Index", "StoreTypes", null, new { @class = "btn btn-info" }) <span>|</span>
+}
+    @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
+        <th></th>
         <th>
-            @Html.DisplayNameFor(model => model.storeName)
+            商店名稱
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sotrePhone)
+            電話號碼
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sotreAddr)
+            地址
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sotreWeb)
+            網站
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sotreWeb2)
+            社群網站
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.potos)
+            商店類型
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.isEnable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StoreType.stName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.userName)
-        </th>
+        @if (User.IsInRole("store"))
+        {
+            <th>狀態</th>
+        }
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <th>
+                是否啟用
+            </th>
+            <th>
+                擁有者名稱
+            </th>
+        }
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.storeName)
+            @if (item.potos != null && item.potos.Length > 0)
+            {
+                <img src='@item.potos.Split(',')[0]' alt="img" style="width:100px;height:100px" />
+            }
+        </td>
+        <td>
+            @Html.ActionLink(item.storeName, "Edit", new { id = item.storeId })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.sotrePhone)
@@ -60,23 +76,31 @@
             @Html.DisplayFor(modelItem => item.sotreWeb2)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.potos)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isEnable)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.StoreType.stName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.userName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.storeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.storeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.storeId })
-        </td>
+        @if (User.IsInRole("store"))
+        {
+            <td>@(Html.Raw(item.isEnable == null ? "審核中" : (item.isEnable.Value ? "已通過" : "未通過，請聯絡本所人員確認原因")))</td>
+        }
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.isEnable)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.User.userName)
+            </td>
+        }
+            <td>
+                @using (Html.BeginForm("Delete", "stores"))
+                {
+                    @Html.AntiForgeryToken();
+                    <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                    <input type="hidden" name="Id" value="@(item.storeId)" />
+                }
+            </td>
     </tr>
-}
+    }
 
 </table>

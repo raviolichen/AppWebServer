@@ -1,22 +1,23 @@
 ﻿@model IEnumerable<AppWebServer.Models.StoreType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "商店類型管理";
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>商店類型管理</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("商店管理", "Index", "stores", null, new { @class = "btn btn-info" }) <span>|</span>
+    @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.stName)
+            商店圖片(僅顯示第一張)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.stpotos)
+            商店名稱
         </th>
         <th></th>
     </tr>
@@ -24,15 +25,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @if (item.stpotos != null && item.stpotos.Length > 0)
+            {
+                <img src="@item.stpotos.Split(',')[0]" style="width:150px;height:150px;" alt="img" />
+            }
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.stName)
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.stpotos)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.stId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.stId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.stId })
+            @using (Html.BeginForm("Delete", "StoreTypes"))
+            {
+                @Html.AntiForgeryToken();
+                @Html.ActionLink("編輯", "Edit", new { id = item.stId }, new { @class = "btn btn-info" }) <span>|</span>
+                <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                <input type="hidden" name="Id" value="@(item.stId)" />
+            }
         </td>
     </tr>
 }

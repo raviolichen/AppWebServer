@@ -1,31 +1,29 @@
 ﻿@model IEnumerable<AppWebServer.Models.UserSlv>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "使用者銀幣管理";
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>使用者銀幣管理</h2>
+<h4>@ViewBag.userName</h4>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            活動名稱
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.currNum)
+            目前持有銀幣
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.accNum)
+            累計持有銀幣
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateStart)
+            銀幣有效期限起
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateEnd)
+            銀幣有效期限迄
         </th>
         <th></th>
     </tr>
@@ -42,15 +40,19 @@
             @Html.DisplayFor(modelItem => item.accNum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateStart)
+            @if (item.dateStart!=null)
+            {
+                @item.dateStart.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateEnd)
+            @if (item.dateEnd != null)
+            {
+                @item.dateEnd.Value.ToString("yyyy/MM/dd")
+            }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("編輯", "Edit", new {  userId=item.userId,eId=item.eId  }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

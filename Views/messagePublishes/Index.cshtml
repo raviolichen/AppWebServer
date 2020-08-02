@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AppWebServer.Models.messagePublish>
+
+@{
+    ViewBag.Title = "推播訊息管理";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>推播訊息管理</h2>
+<table class="table">
+    <tr>
+        <th>
+            發送群組/發送對象<br />(群組為指定才需填寫)
+        </th>
+        <th>
+            發送時間起
+        </th>
+        <th>
+            發送時間迄
+        </th>
+        <th>
+            內容
+        </th>
+        <th></th>
+    </tr>
+    <tr id="createRow">
+        @{
+            if (TempData["messagePublish"] == null)
+            {
+                Html.RenderAction("Create");
+            }
+            else
+            {
+                Html.RenderPartial("Create", TempData["messagePublish"]);
+            }
+        }
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (ViewBag.Id == null || ViewBag.Id != item.pId)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.p_users)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pDateStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pDateEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pmessage)
+                </td>
+                <td>
+                    @Html.ActionLink("編輯", "Index", new { id = item.pId }, new { @class = "btn btn-default" })
+                </td>
+                <td>
+                    @using (Html.BeginForm("Delete", "messagePublishes"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                        <input type="hidden" name="id" value="@(item.pId)" />
+                    }
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr id="editRow">
+            @if (TempData["messagePublish"] == null)
+            {
+                Html.RenderAction("Edit");
+            }
+            else
+            {
+                Html.RenderPartial("Edit", TempData["messagePublish"]);
+            }
+            </tr>
+        }
+    }
+
+</table>
+<script>
+    $('#createRow select').on('change', function () {
+        if (this.value == "spec")
+        {
+            $("#createRow input[type='text']")[0].style.display = 'block'
+        }
+        else {
+            $("#createRow input[type='text']")[0].style.display = 'none'
+        }
+    });
+    $('#editRow select').on('change', function () {
+        if (this.value == "spec") {
+            $("#editRow input[type='text']")[0].style.display = 'block'
+        }
+        else {
+            $("#editRow input[type='text']")[0].style.display = 'none'
+        }
+    });
+</script>

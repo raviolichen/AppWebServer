@@ -11,12 +11,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/tableDynamic.js");
+    @Scripts.Render("~/Scripts/tableDynamic.js")
     @RenderSection("scripts", required: false)
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+        -->
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,25 +36,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("App後台管理介面", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse" id="collect">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("活動管理", "Index", "EventPages", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("廣告管理", "Index", "Banners", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("金幣管理", "Index", "Golds", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("商店管理", "Index", "stores", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("使用者管理", "Index", "Users", new { area = "" }, null)</li>
-
+                    @if (User.IsInRole("admin") || User.IsInRole("manage"))
+                    {
+                        <li>@Html.ActionLink("訊息管理", "Index", "messagePublishes", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("活動管理", "Index", "EventPages", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("廣告管理", "Index", "Banners", new { area = "" }, null)</li>
+                    }
+                    @if (User.IsInRole("admin") || User.IsInRole("manage") || User.IsInRole("store"))
+                    {
+                        <li>@Html.ActionLink("金幣管理", "Index", "Golds", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("商店管理", "Index", "stores", new { area = "" }, null)</li>
+                    }
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("使用者管理", "Index", "Users", new { area = "" }, null)</li>
+                    }
+                    @if (User.IsInRole("admin") || User.IsInRole("manage") || User.IsInRole("store") || User.IsInRole("user"))
+                    {
+                        <li>@Html.ActionLink("變更密碼", "Edit", "UserEdit", new { area = "" }, null)</li>
+                    }
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="container body-content">
+        <div style="padding-top:30px;"></div>
         @RenderBody()
         <hr />
     </div>
+    <script>
+        $('.datepicker').datetimepicker({
+            format: 'YYYY/MM/DD',//顯示格式
+        })
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm',//顯示格式
+        })
+    </script>
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script>
         ClassicEditor
@@ -101,6 +132,7 @@
                 console.warn('Build id: ufnoi4gw0b2d-xstaryq6r3kv');
                 console.error(error);
             });</script>
+
 </body>
 
 </html>

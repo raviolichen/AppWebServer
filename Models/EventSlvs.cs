@@ -24,5 +24,7 @@ namespace AppWebServer.Models
         public Nullable<bool> isEnable { get; set; }
         public Nullable<int> slvNum { get; set; }
         public Nullable<int> maxUse { get; set; }
+        public Nullable<int> totalmaxUse { get; set; }
+        public Nullable<bool> isGuid { get; set; }
     }
 }

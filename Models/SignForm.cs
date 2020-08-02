@@ -25,7 +25,7 @@ namespace AppWebServer.Models
         public Nullable<System.DateTime> dateStart { get; set; }
         public Nullable<System.DateTime> dateEnd { get; set; }
         public string field { get; set; }
-        public Nullable<bool> isEanble { get; set; }
+        public Nullable<bool> isEnable { get; set; }
     
         public virtual EventPage EventPage { get; set; }
         public virtual ICollection<SignRecords> SignRecords { get; set; }

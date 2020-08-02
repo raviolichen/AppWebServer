@@ -22,5 +22,9 @@ namespace AppWebServer.Models
         public byte[] qrcode { get; set; }
         public Nullable<bool> isEnable { get; set; }
         public Nullable<int> ownerUserId { get; set; }
+        public Nullable<int> totalUsetimes { get; set; }
+        public Nullable<int> userUsetimes { get; set; }
+    
+        public virtual User User { get; set; }
     }
 }

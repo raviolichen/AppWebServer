@@ -93,7 +93,6 @@ E:\codejob\AppWebServer\AppWebServer\bin\zh-Hant\System.Web.Razor.resources.dll
 E:\codejob\AppWebServer\AppWebServer\bin\zh-Hant\System.Web.WebPages.resources.dll
 E:\codejob\AppWebServer\AppWebServer\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 E:\codejob\AppWebServer\AppWebServer\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
-E:\codejob\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csprojAssemblyReference.cache
 E:\codejob\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csproj.CoreCompileInputs.cache
 E:\codejob\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csproj.CopyComplete
 E:\codejob\AppWebServer\AppWebServer\obj\Debug\AppWebServer.dll
@@ -197,3 +196,5 @@ D:\App_coding\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csproj.CoreCompil
 D:\App_coding\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csproj.CopyComplete
 D:\App_coding\AppWebServer\AppWebServer\obj\Debug\AppWebServer.dll
 D:\App_coding\AppWebServer\AppWebServer\obj\Debug\AppWebServer.pdb
+E:\codejob\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csprojAssemblyReference.cache
+D:\App_coding\AppWebServer\AppWebServer\obj\Debug\AppWebServer.csprojAssemblyReference.cache

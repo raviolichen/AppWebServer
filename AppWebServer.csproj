@@ -61,6 +61,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -174,18 +175,30 @@
     <Compile Include="Controllers\BannersController.cs" />
     <Compile Include="Controllers\api\EventItemController.cs" />
     <Compile Include="Controllers\DynamictableHelper.cs" />
-    <Compile Include="Controllers\EventPagesController.cs" />
+    <Compile Include="Controllers\eventpage\EventPagesController.cs" />
+    <Compile Include="Controllers\eventpage\VoteItemsController.cs" />
+    <Compile Include="Controllers\exchangModels\EventItem.cs" />
+    <Compile Include="Controllers\exchangModels\EventShowControl.cs" />
+    <Compile Include="Controllers\exchangModels\HomePageJSON.cs" />
+    <Compile Include="Controllers\exchangModels\RecordJSON.cs" />
+    <Compile Include="Controllers\exchangModels\UserData.cs" />
     <Compile Include="Controllers\GoldsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\api\_HomePageController.cs" />
-    <Compile Include="Controllers\SignFormsController.cs" />
-    <Compile Include="Controllers\SlvsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\messagePublishesController.cs" />
+    <Compile Include="Controllers\RegisteredController.cs" />
+    <Compile Include="Controllers\eventpage\SignFormsController.cs" />
+    <Compile Include="Controllers\eventpage\SignRecordsController.cs" />
+    <Compile Include="Controllers\eventpage\SlvsController.cs" />
     <Compile Include="Controllers\storesController.cs" />
     <Compile Include="Controllers\StoreTypesController.cs" />
-    <Compile Include="Controllers\UserGroupsController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\UserSlvsController.cs" />
+    <Compile Include="Controllers\user\UserGroupsController.cs" />
+    <Compile Include="Controllers\UserEditController.cs" />
+    <Compile Include="Controllers\user\UsersController.cs" />
+    <Compile Include="Controllers\user\UserSlvsController.cs" />
+    <Compile Include="Controllers\eventpage\VotesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,6 +235,9 @@
     <Compile Include="Models\ownerSlvsdetail.cs">
       <DependentUpon>AppDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProxyDateLog.cs">
+      <DependentUpon>AppDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SignForm.cs">
       <DependentUpon>AppDataModel.tt</DependentUpon>
     </Compile>
@@ -247,6 +263,12 @@
       <DependentUpon>AppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSlv.cs">
+      <DependentUpon>AppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vote.cs">
+      <DependentUpon>AppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VoteItem.cs">
       <DependentUpon>AppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -383,65 +405,59 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_manageLayout.cshtml" />
     <Content Include="Views\Banners\Create.cshtml" />
-    <Content Include="Views\Banners\Delete.cshtml" />
-    <Content Include="Views\Banners\Details.cshtml" />
     <Content Include="Views\Banners\Edit.cshtml" />
     <Content Include="Views\Banners\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\EventPages\Create.cshtml" />
-    <Content Include="Views\EventPages\Delete.cshtml" />
-    <Content Include="Views\EventPages\Details.cshtml" />
     <Content Include="Views\EventPages\Edit.cshtml" />
     <Content Include="Views\EventPages\Index.cshtml" />
     <Content Include="Views\SignForms\Create.cshtml" />
-    <Content Include="Views\SignForms\Delete.cshtml" />
-    <Content Include="Views\SignForms\Details.cshtml" />
     <Content Include="Views\SignForms\Edit.cshtml" />
     <Content Include="Views\SignForms\Index.cshtml" />
     <Content Include="Views\UserSlvs\Create.cshtml" />
-    <Content Include="Views\UserSlvs\Delete.cshtml" />
-    <Content Include="Views\UserSlvs\Details.cshtml" />
     <Content Include="Views\UserSlvs\Edit.cshtml" />
     <Content Include="Views\UserSlvs\Index.cshtml" />
-    <Content Include="Views\StoreTypes\Create.cshtml" />
-    <Content Include="Views\StoreTypes\Delete.cshtml" />
-    <Content Include="Views\StoreTypes\Details.cshtml" />
-    <Content Include="Views\StoreTypes\Edit.cshtml" />
-    <Content Include="Views\StoreTypes\Index.cshtml" />
-    <Content Include="Views\Golds\Create.cshtml" />
-    <Content Include="Views\Golds\Delete.cshtml" />
-    <Content Include="Views\Golds\Details.cshtml" />
-    <Content Include="Views\Golds\Edit.cshtml" />
-    <Content Include="Views\Golds\Index.cshtml" />
-    <Content Include="Views\UserGroups\Create.cshtml" />
-    <Content Include="Views\UserGroups\Delete.cshtml" />
-    <Content Include="Views\UserGroups\Details.cshtml" />
-    <Content Include="Views\UserGroups\Edit.cshtml" />
-    <Content Include="Views\UserGroups\Index.cshtml" />
     <Content Include="Views\stores\Create.cshtml" />
-    <Content Include="Views\stores\Delete.cshtml" />
-    <Content Include="Views\stores\Details.cshtml" />
     <Content Include="Views\stores\Edit.cshtml" />
     <Content Include="Views\stores\Index.cshtml" />
     <Content Include="Views\Slvs\Create.cshtml" />
-    <Content Include="Views\Slvs\Delete.cshtml" />
-    <Content Include="Views\Slvs\Details.cshtml" />
     <Content Include="Views\Slvs\Edit.cshtml" />
     <Content Include="Views\Slvs\Index.cshtml" />
+    <Content Include="Views\Golds\Create.cshtml" />
+    <Content Include="Views\Golds\Edit.cshtml" />
+    <Content Include="Views\Golds\Index.cshtml" />
+    <Content Include="Views\SignRecords\Create.cshtml" />
+    <Content Include="Views\SignRecords\Edit.cshtml" />
+    <Content Include="Views\SignRecords\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\UserEdit\Edit.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ApproveStores.cshtml" />
+    <Content Include="Views\Home\ApproveGolds.cshtml" />
+    <Content Include="Views\Registered\Index.cshtml" />
+    <Content Include="Views\Home\ApproveUsers.cshtml" />
+    <Content Include="Views\Votes\Create.cshtml" />
+    <Content Include="Views\Votes\Edit.cshtml" />
+    <Content Include="Views\Votes\Index.cshtml" />
+    <Content Include="Views\VoteItems\Edit.cshtml" />
+    <Content Include="Views\VoteItems\Index.cshtml" />
+    <Content Include="Views\VoteItems\Create.cshtml" />
+    <Content Include="Views\StoreTypes\Create.cshtml" />
+    <Content Include="Views\StoreTypes\Edit.cshtml" />
+    <Content Include="Views\StoreTypes\Index.cshtml" />
+    <Content Include="Views\messagePublishes\Index.cshtml" />
+    <Content Include="Views\messagePublishes\Create.cshtml" />
+    <Content Include="Views\messagePublishes\Edit.cshtml" />
+    <Content Include="Views\Votes\VoteUsers.cshtml" />
+    <Content Include="Views\Home\regVote.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\manage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
@@ -492,7 +508,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50780</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50781/</IISUrl>
+          <IISUrl>http://localhost:50780/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

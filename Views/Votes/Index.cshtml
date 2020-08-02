@@ -1,0 +1,75 @@
+﻿@model IEnumerable<AppWebServer.Models.Vote>
+
+@{
+    ViewBag.Title = "票選";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+<h2>票選管理</h2>
+<p>
+    @Html.ActionLink("新增", "Create", new { eid = Request["eid"].ToString() }, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            票選名單管理
+        </th>
+        <th>
+            票選類型
+        </th>
+        <th>
+            每人票數
+        </th>
+        <th>
+            票選開始日期
+        </th>
+        <th>
+            票選結束日期
+        </th>
+        <th>
+            是否啟用
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("票選名單管理", "Index", "VoteItems", new { id = item.vId, eid = item.eId }, new { @class = "btn btn-info" })
+            </td>
+            <td>
+                @{
+                    Html.RenderAction("GetTypeName", new { voteType = item.voteType });
+                }
+            </td>
+            <td>
+                @item.voteCount
+            </td>
+            <td>
+                @if (item.dateStart != null)
+                {
+                    @item.dateStart.Value.ToString("yyyy/MM/dd")
+                }
+            </td>
+            <td>
+                @if (item.dateEnd != null)
+                {
+                    @item.dateEnd.Value.ToString("yyyy/MM/dd")
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isEnable)
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "Votes"))
+                {
+                    @Html.AntiForgeryToken();
+                    @Html.ActionLink("投票使用者清單", "VoteUsers", new { id = item.vId, eid = item.eId }, new { @class = "btn btn-info" }) <span>|</span>
+                    @Html.ActionLink("編輯", "Edit", new { id = item.vId, eid = item.eId }, new { @class = "btn btn-info" }) <span>|</span>
+                    <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                    <input type="hidden" name="Id" value="@(item.vId)" />
+                }
+            </td>
+        </tr>
+    }
+</table>

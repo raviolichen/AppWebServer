@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AppWebServer.Models.Vote>
+@{
+    ViewBag.Title = "投票活動報名";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+<table class="table">
+    <tr>
+        <th>
+            活動名稱
+        </th>
+        <th>
+            活動圖片
+        </th>
+        <th>
+            票選開始日期
+        </th>
+        <th>
+            票選結束日期
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventPage.name)
+        </td>
+        <td>
+            @if (item.EventPage.url != null)
+            {
+                <img src="@(item.EventPage.url)" alt="@(item.EventPage.name)" style="width:150px;height:150px" />
+            }
+        </td>
+        <td>
+            @(item.dateStart!=null?item.dateStart.Value.ToString("yyyy/MM/dd"):"")
+        </td>
+        <td>
+            @(item.dateEnd!=null?item.dateEnd.Value.ToString("yyyy/MM/dd"):"")
+        </td>
+        <td>
+            @Html.ActionLink(User.IsInRole("manage")|| User.IsInRole("admin") ? "前往審核": "前往報名", "Index","VoteItems", new { id = item.vId }, new { @class = "btn btn-info" })
+        </td>
+        <td></td>
+    </tr>
+    }
+</table>

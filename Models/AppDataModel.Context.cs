@@ -40,5 +40,8 @@ namespace AppWebServer.Models
         public DbSet<EventSlvs> EventSlvs { get; set; }
         public DbSet<Slvs> Slvs { get; set; }
         public DbSet<ownerSlvsdetail> ownerSlvsdetail { get; set; }
+        public DbSet<Vote> Vote { get; set; }
+        public DbSet<VoteItem> VoteItem { get; set; }
+        public DbSet<ProxyDateLog> ProxyDateLog { get; set; }
     }
 }

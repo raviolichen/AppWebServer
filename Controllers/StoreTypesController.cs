@@ -10,6 +10,7 @@ using AppWebServer.Models;
 
 namespace AppWebServer.Controllers
 {
+    [Authorize(Roles = "admin,manage")]
     public class StoreTypesController : Controller
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
@@ -17,7 +18,7 @@ namespace AppWebServer.Controllers
         // GET: StoreTypes
         public ActionResult Index()
         {
-            return View(db.StoreType.ToList());
+            return View(db.StoreType.OrderByDescending(o => o.stId).ToList());
         }
 
         // GET: StoreTypes/Details/5
@@ -50,6 +51,7 @@ namespace AppWebServer.Controllers
         {
             if (ModelState.IsValid)
             {
+                storeType.stpotos = formatpotoString();
                 db.StoreType.Add(storeType);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +84,7 @@ namespace AppWebServer.Controllers
         {
             if (ModelState.IsValid)
             {
+                storeType.stpotos = formatpotoString();
                 db.Entry(storeType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -122,6 +125,37 @@ namespace AppWebServer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public string FormatPotos(string potos)
+        {
+
+            //"<td>{0}</td><td><input name='name{1}' type='text' placeholder='url' class='form-control input-md'/> </td>"
+            if (potos == null)
+                potos = "";
+            string[] values = potos.Split(',');
+            List<string[]> value = new List<string[]>();
+            foreach (string a in values)
+            {
+                value.Add(new string[] { a });
+            }
+            List<string> title = new List<string>();
+            title.Add("圖片URL");
+            TempData["potoNames"] = title;
+            return DynamictableHelper.GetDynamictable(value, title, "poto");
+        }
+        private string formatpotoString()
+        {
+            string datas = "";
+            string potosReqname = (TempData["potoNames"] as List<string>).FirstOrDefault();
+            int i = 0;
+            while (Request[potosReqname + i] != null)
+            {
+                if (Request[potosReqname + i].ToString().Length > 0)
+                    datas += "," + Request[potosReqname + i];
+                i++;
+            }
+            return datas.Length >= 1 ? datas.Substring(1) : "";
+
         }
     }
 }

@@ -1,110 +1,112 @@
 ﻿@model AppWebServer.Models.store
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "商店管理";
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>新增</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>store</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.storeName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.storeName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.storeName, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>商店管理</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>商店名稱</p></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.storeName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.storeName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.html, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextArea("html", new { id = "html", @name = "html", @class = "editor" })
-            @Html.ValidationMessageFor(model => model.html, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>商店內容</p></div>
+            <div class="col-md-10">
+                @Html.TextArea("html", new { id = "html", @name = "html", @class = "editor" })
+                @Html.ValidationMessageFor(model => model.html, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.sotrePhone, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sotrePhone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sotrePhone, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>電話</p></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sotrePhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sotrePhone, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.sotreAddr, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sotreAddr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sotreAddr, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>地址</p></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sotreAddr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sotreAddr, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.sotreWeb, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sotreWeb, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sotreWeb, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>網站</p></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sotreWeb, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sotreWeb, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.sotreWeb2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sotreWeb2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sotreWeb2, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>社群網站</p></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sotreWeb2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sotreWeb2, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.potos, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.Action("FormatPotos",new {})
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>圖片url</p></div>
+            <div class="col-md-10">
+                @Html.Action("FormatPotos", new { })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.products, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.Action("FormatProudcts", new {})
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>產品</p></div>
+            @Html.LabelFor(model => model.products, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Action("FormatProudcts", new { })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.isEnable, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.isEnable)
-                @Html.ValidationMessageFor(model => model.isEnable, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><p>商店類型</p></div>
+            <div class="col-md-10">
+                @Html.DropDownList("stId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.stId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <div class="form-group">
+                <div class="control-label col-md-2"><p>擁有者名稱</p></div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ownerUser", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ownerUser, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><p>是否啟用</p></div>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.isEnable, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.isEnable, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="送出" class="btn btn-info" />
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.stId, "stId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("stId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.stId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ownerUser, "ownerUser", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ownerUser", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ownerUser, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回到列表", "Index")
 </div>

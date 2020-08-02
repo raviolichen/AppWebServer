@@ -5,66 +5,93 @@
     Layout = "~/Views/Shared/_manageLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>金幣管理</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.goldname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.html)
+            金幣名稱
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.potos)
+            金幣數量
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.goldnum)
+            使用者可掃描次數
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.qrcode)
+            可用次數(剩餘數量)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.isEnable)
+            QRcode
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ownerUserId)
-        </th>
-        <th></th>
-    </tr>
+        @if (User.IsInRole("store"))
+        {
+            <th>狀態</th>
+        }
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <th>
+                是否啟用
+            </th>
+            <th>
+                金幣擁有者
+            </th>
+        }
+            <th></th>
+        </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @if (item.potos != null && item.potos.Length > 0)
+            {
+                <img src="@item.potos.Split(',')[0]" alt="img" />
+            }
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.goldname)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.html)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.potos)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.goldnum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.qrcode)
+            @Html.DisplayFor(modelItem => item.userUsetimes)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.isEnable)
+            @Html.DisplayFor(modelItem => item.totalUsetimes) (剩餘:@Html.Action("GetGoldRem", new { goldId = item.goldId, totalmaxUse = item.totalUsetimes == null ? 0 : item.totalUsetimes }))
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ownerUserId)
+            <img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=gold,@(item.goldId)&chld=L|4" alt="img" />
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.goldId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.goldId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.goldId })
-        </td>
-    </tr>
+        @if (User.IsInRole("store"))
+        {
+            <td>@(Html.Raw(item.isEnable == null ? "審核中" : (item.isEnable.Value ? "已通過" : "未通過，請聯絡本所人員確認原因")))</td>
+        }
+        @if (User.IsInRole("admin") || User.IsInRole("manage"))
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.isEnable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ownerUserId)
+            </td>
+        }
+            <td>
+                @using (Html.BeginForm("Delete", "Golds"))
+                {
+                    @Html.ActionLink("編輯", "Edit", new { id = item.goldId }, new { @class = "btn btn-info" }) <span>|</span>
+                    @Html.AntiForgeryToken();
+                    <input type="submit" value="刪除" class="btn btn-info" style="width:54px" onclick="javascript:return confirm('是否刪除？')" ) />
+                    <input type="hidden" name="id" value="@(item.goldId)" />
+                }
+            </td>
+        </tr>
 }
 
 </table>
