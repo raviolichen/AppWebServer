@@ -31,7 +31,7 @@ namespace AppWebServer.Controllers
         }
         private ActionResult queryphone(string phone)
         {
-            User user = db.User.Where(i => i.phone.Contains(phone)).FirstOrDefault();
+            User user = db.User.Where(i => i.phone.CompareTo(phone)==0).FirstOrDefault();
             if (user == null)
                 ViewBag.message = "查無此號碼:" + phone;
             else if (user.isEanble != null&&user.isEanble.Value)

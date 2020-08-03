@@ -29,10 +29,11 @@ namespace AppWebServer.Controllers
             if (db.User.ToList().Count > 0)
                 user = db.User.SqlQuery("SELECT * FROM [User] WHERE deviceId LIKE +'" + deviceId + "'").FirstOrDefault();
             string _messagePublishes="";
-            if (user == null)
+            if (user == null&& !isOnlyUserData)
             {
                 // user = new User { deviceId = deviceId,token= Convert.ToBase64String(crypto),tokendate=DateTime.Now.AddHours(4) };
-                // db.User.Add(user);         
+                // db.User.Add(user);       
+                
                 List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now && i.p_users.ToLower().CompareTo("all") == 0).ToList();
                 foreach(messagePublish messages in messagePublishs)
                 {
