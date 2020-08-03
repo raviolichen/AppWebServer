@@ -24,22 +24,24 @@ namespace AppWebServer.Controllers
             SHA512 token = new SHA512CryptoServiceProvider();
             User user = null;
             string[] data = deviceId.Split(':');
-            bool isOnlyUserData =bool.Parse(data[1]);
+            bool isOnlyUserData = bool.Parse(data[1]);
             deviceId = data[0];
             if (db.User.ToList().Count > 0)
                 user = db.User.SqlQuery("SELECT * FROM [User] WHERE deviceId LIKE +'" + deviceId + "'").FirstOrDefault();
-            string _messagePublishes="";
-            if (user == null&& !isOnlyUserData)
+            string _messagePublishes = "";
+            if (user == null)
             {
                 // user = new User { deviceId = deviceId,token= Convert.ToBase64String(crypto),tokendate=DateTime.Now.AddHours(4) };
                 // db.User.Add(user);       
-                
-                List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now && i.p_users.ToLower().CompareTo("all") == 0).ToList();
-                foreach(messagePublish messages in messagePublishs)
+                if (!isOnlyUserData)
                 {
-                    _messagePublishes += "‧"+messages.pmessage + "\n\n";
+                    List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now && i.p_users.ToLower().CompareTo("all") == 0).ToList();
+                    foreach (messagePublish messages in messagePublishs)
+                    {
+                        _messagePublishes += "‧" + messages.pmessage + "\n\n";
+                    }
                 }
-                return new HttpResponseMessage { Content = new StringContent("{\"result\":\"未登記的手機，將會被限制報名等相關功能，如要開啟，請至會員頁面進行登記作業。\",\"messagePublish\":\""+ _messagePublishes + "\"}", Encoding.GetEncoding("UTF-8"), "application/json") };
+                return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(new { result = "未登記的手機，將會被限制報名等相關功能，如要開啟，請至會員頁面進行登記作業。", messagePublish = _messagePublishes }), Encoding.GetEncoding("UTF-8"), "application/json") };
             }
             else
             {
@@ -100,7 +102,7 @@ namespace AppWebServer.Controllers
                 }
                 else
                 {
-                    return new HttpResponseMessage { Content = new StringContent("{\"result\":\"您所註冊的手機號碼已經被使用，請確認您已經綁定的手機，如被盜用請聯絡本所。\",\"userId\":\"0\"}", Encoding.GetEncoding("UTF-8"), "application/json") };
+                    return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(new { result = "您所註冊的手機號碼已經被使用，請確認您已經綁定的手機，如被盜用請聯絡本所。", userId = "0" }), Encoding.GetEncoding("UTF-8"), "application/json") };
                 }
             }
             else
@@ -111,7 +113,7 @@ namespace AppWebServer.Controllers
 
             }
             db.SaveChanges();
-            return new HttpResponseMessage { Content = new StringContent("{\"userName\":\"" + user.userName + "\",\"golds\":\"" + user.goldnum + "\",\"result\":\"true\",\"userId\":\"" + user.userId.ToString() + "\",\"token\":\"" + Convert.ToBase64String(crypto) + "\"}", Encoding.GetEncoding("UTF-8"), "application/json") };
+            return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(new {user.userName,golds=user.goldnum.ToString() ,result="true",userId= user.userId.ToString(),token= Convert.ToBase64String(crypto)}), Encoding.GetEncoding("UTF-8"), "application/json") };
         }
     }
 }
