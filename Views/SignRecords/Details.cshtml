@@ -1,0 +1,59 @@
+﻿@model AppWebServer.Models.SignRecords
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SignRecords</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.signData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.signData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isComplete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isComplete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.completeDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.completeDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SignForm.field)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SignForm.field)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.userName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.userName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

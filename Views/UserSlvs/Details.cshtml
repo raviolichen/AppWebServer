@@ -1,0 +1,59 @@
+﻿@model AppWebServer.Models.UserSlv
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserSlv</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.currNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.currNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateEnd)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
