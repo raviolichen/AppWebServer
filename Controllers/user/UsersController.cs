@@ -83,11 +83,16 @@ namespace AppWebServer.Controllers
             if (ModelState.IsValid)
             {
                 User originUser = db.User.Find(user.userId);
-                user.password = Utility.HMACSHA256(user.password, user.loginName.ToString());
-                user.deviceId = originUser.deviceId;
-                user.token = originUser.token;
-                user.tokendate = originUser.tokendate;
-                db.Entry(user).State = EntityState.Modified;
+                originUser.password = Utility.HMACSHA256(user.password, user.loginName.ToString());
+                originUser.userName = user.userName;
+                originUser.phone = user.phone;
+                originUser.oAuth = user.oAuth;
+                originUser.powerGroup = user.powerGroup;
+                originUser.isEanble = user.isEanble;
+                originUser.loginName = user.loginName;
+                originUser.prohibit = user.prohibit;
+
+                db.Entry(originUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
