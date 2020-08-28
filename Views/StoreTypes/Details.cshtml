@@ -1,0 +1,35 @@
+﻿@model AppWebServer.Models.StoreType
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StoreType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.stName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stpotos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stpotos)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.stId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

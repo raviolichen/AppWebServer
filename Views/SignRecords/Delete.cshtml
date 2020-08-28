@@ -1,0 +1,65 @@
+﻿@model AppWebServer.Models.SignRecords
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_manageLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SignRecords</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.signData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.signData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isComplete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isComplete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.completeDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.completeDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SignForm.field)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SignForm.field)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.userName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.userName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
