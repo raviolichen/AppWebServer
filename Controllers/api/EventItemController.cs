@@ -18,7 +18,7 @@ namespace AppWebServer.Controllers
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
         [ActionName("GetEventDetail")]
-        public HttpResponseMessage GetEventDetail(int? eId, int? userId)
+        public HttpResponseMessage GetEventDetail(int? eId, int? userId,string LastEditDateTime)
         {
             //int userId = 2;
             //int eId = 2;
@@ -28,6 +28,8 @@ namespace AppWebServer.Controllers
             if (eventPage != null)
             {
                 string html = eventPage.html;//.Replace("\"", @"\""");
+                if (LastEditDateTime !=null&& eventPage.lastEditDateTime == DateTime.Parse(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(LastEditDateTime))))
+                    html = "cache";
                 if (eventPage.SignForm.Count() > 0)
                 {
 
@@ -65,11 +67,11 @@ namespace AppWebServer.Controllers
                         button = "目前無法報名，或不是報名期間";
                         isEnable = "false";
                     }
-                    eventShowControl = new EventShowControl(eventPage.evenType, button, isEnable, html, "", "", "", "", 0);
+                    eventShowControl = new EventShowControl(eventPage.evenType, button, isEnable, html, "", "", "", "", 0, eventPage.lastEditDateTime.Value);
                 }
                 else
                 {
-                    eventShowControl = new EventShowControl("info", "", "false", html, "", "", "", "", 0);
+                    eventShowControl = new EventShowControl("info", "", "false", html, "", "", "", "", 0, eventPage.lastEditDateTime.Value);
                 }
             }
             GetVote(userId, eventPage, ref eventShowControl);
@@ -245,9 +247,11 @@ namespace AppWebServer.Controllers
                     {
                         if (signRecord == null)
                         {
-                            signRecord = new SignRecords();
-                            signRecord.userId = userId;
-                            signRecord.sId = sId;
+                            signRecord = new SignRecords
+                            {
+                                userId = userId,
+                                sId = sId
+                            };
                             db.SignRecords.Add(signRecord);
 
                         }

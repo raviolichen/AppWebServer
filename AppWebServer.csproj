@@ -181,6 +181,7 @@
     <Compile Include="Controllers\exchangModels\EventShowControl.cs" />
     <Compile Include="Controllers\exchangModels\HomePageJSON.cs" />
     <Compile Include="Controllers\exchangModels\RecordJSON.cs" />
+    <Compile Include="Controllers\exchangModels\StoreDetail.cs" />
     <Compile Include="Controllers\exchangModels\UserData.cs" />
     <Compile Include="Controllers\GoldsController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
@@ -508,7 +509,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50780</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50781/</IISUrl>
+          <IISUrl>http://192.168.0.100:50780/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

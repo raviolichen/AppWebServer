@@ -25,6 +25,7 @@ namespace AppWebServer.Models
         public Nullable<int> maxUse { get; set; }
         public Nullable<bool> isGuid { get; set; }
         public Nullable<int> totalmaxUse { get; set; }
+        public Nullable<System.DateTime> LastEditDateTime { get; set; }
     
         public virtual EventPage EventPage { get; set; }
     }

@@ -28,6 +28,7 @@
           <Property Name="toGoldNum" Type="int" />
           <Property Name="postDate" Type="datetime" />
           <Property Name="evenType" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastEditDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Gold">
           <Key>
@@ -43,6 +44,7 @@
           <Property Name="ownerUserId" Type="int" />
           <Property Name="totalUsetimes" Type="int" />
           <Property Name="userUsetimes" Type="int" />
+          <Property Name="lastEditDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="messagePublish">
           <Key>
@@ -103,6 +105,7 @@
           <Property Name="slvNum" Type="int" />
           <Property Name="maxUse" Type="int" />
           <Property Name="totalmaxUse" Type="int" />
+          <Property Name="LastEditDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="store">
           <Key>
@@ -121,6 +124,7 @@
           <Property Name="isEnable" Type="bit" />
           <Property Name="stId" Type="int" />
           <Property Name="ownerUser" Type="int" />
+          <Property Name="LastEditDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="StoreType">
           <Key>
@@ -598,6 +602,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="UserSlv" Relationship="AppDataBaseModel.FK_UserSlv_ToEventPage" FromRole="EventPage" ToRole="UserSlv" />
           <NavigationProperty Name="Slvs" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="EventPage" ToRole="Slvs" />
           <NavigationProperty Name="Vote" Relationship="AppDataBaseModel.FK_Vote_EventPage" FromRole="EventPage" ToRole="Vote" />
+          <Property Name="lastEditDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="SignForm">
           <Key>
@@ -740,6 +745,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_Gold_ToUser" FromRole="Gold" ToRole="User" />
           <Property Name="totalUsetimes" Type="Int32" />
           <Property Name="userUsetimes" Type="Int32" />
+          <Property Name="lastEditDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="messagePublish">
           <Key>
@@ -770,6 +776,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_store_ToUser" FromRole="store" ToRole="User" />
           <Property Name="html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="stroeMapLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="StoreType">
           <Key>
@@ -870,6 +877,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <NavigationProperty Name="EventPage" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="Slvs" ToRole="EventPage" />
           <Property Name="isGuid" Type="Boolean" />
           <Property Name="totalmaxUse" Type="Int32" />
+          <Property Name="LastEditDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Slv_ToEventPage">
           <End Type="AppDataBaseModel.EventPage" Role="EventPage" Multiplicity="1" />
@@ -1004,6 +1012,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="EventPage">
             <EntityTypeMapping TypeName="AppDataBaseModel.EventPage">
               <MappingFragment StoreEntitySet="EventPage">
+                <ScalarProperty Name="lastEditDateTime" ColumnName="lastEditDateTime" />
                 <ScalarProperty Name="evenType" ColumnName="evenType" />
                 <ScalarProperty Name="postDate" ColumnName="postDate" />
                 <ScalarProperty Name="toGoldNum" ColumnName="toGoldNum" />
@@ -1076,6 +1085,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="Gold">
             <EntityTypeMapping TypeName="AppDataBaseModel.Gold">
               <MappingFragment StoreEntitySet="Gold">
+                <ScalarProperty Name="lastEditDateTime" ColumnName="lastEditDateTime" />
                 <ScalarProperty Name="userUsetimes" ColumnName="userUsetimes" />
                 <ScalarProperty Name="totalUsetimes" ColumnName="totalUsetimes" />
                 <ScalarProperty Name="ownerUserId" ColumnName="ownerUserId" />
@@ -1103,6 +1113,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="store">
             <EntityTypeMapping TypeName="AppDataBaseModel.store">
               <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="LastEditDateTime" ColumnName="LastEditDateTime" />
                 <ScalarProperty Name="stroeMapLocation" ColumnName="stroeMapLocation" />
                 <ScalarProperty Name="html" ColumnName="html" />
                 <ScalarProperty Name="ownerUser" ColumnName="ownerUser" />
@@ -1170,6 +1181,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
           <EntitySetMapping Name="Slvs">
             <EntityTypeMapping TypeName="AppDataBaseModel.Slvs">
               <MappingFragment StoreEntitySet="Slvs">
+                <ScalarProperty Name="LastEditDateTime" ColumnName="LastEditDateTime" />
                 <ScalarProperty Name="totalmaxUse" ColumnName="totalmaxUse" />
                 <ScalarProperty Name="isGuid" ColumnName="isGuid" />
                 <ScalarProperty Name="maxUse" ColumnName="maxUse" />

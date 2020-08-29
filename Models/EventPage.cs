@@ -32,6 +32,7 @@ namespace AppWebServer.Models
         public Nullable<int> toGoldNum { get; set; }
         public Nullable<System.DateTime> postDate { get; set; }
         public string evenType { get; set; }
+        public Nullable<System.DateTime> lastEditDateTime { get; set; }
     
         public virtual ICollection<SignForm> SignForm { get; set; }
         public virtual ICollection<UserSlv> UserSlv { get; set; }

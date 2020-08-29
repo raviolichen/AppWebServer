@@ -27,6 +27,7 @@ namespace AppWebServer.Models
         public Nullable<int> ownerUser { get; set; }
         public string html { get; set; }
         public string stroeMapLocation { get; set; }
+        public Nullable<System.DateTime> LastEditDateTime { get; set; }
     
         public virtual StoreType StoreType { get; set; }
         public virtual User User { get; set; }

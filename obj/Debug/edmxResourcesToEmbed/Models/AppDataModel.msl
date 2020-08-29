@@ -14,6 +14,7 @@
     <EntitySetMapping Name="EventPage">
       <EntityTypeMapping TypeName="AppDataBaseModel.EventPage">
         <MappingFragment StoreEntitySet="EventPage">
+          <ScalarProperty Name="lastEditDateTime" ColumnName="lastEditDateTime" />
           <ScalarProperty Name="evenType" ColumnName="evenType" />
           <ScalarProperty Name="postDate" ColumnName="postDate" />
           <ScalarProperty Name="toGoldNum" ColumnName="toGoldNum" />
@@ -86,6 +87,7 @@
     <EntitySetMapping Name="Gold">
       <EntityTypeMapping TypeName="AppDataBaseModel.Gold">
         <MappingFragment StoreEntitySet="Gold">
+          <ScalarProperty Name="lastEditDateTime" ColumnName="lastEditDateTime" />
           <ScalarProperty Name="userUsetimes" ColumnName="userUsetimes" />
           <ScalarProperty Name="totalUsetimes" ColumnName="totalUsetimes" />
           <ScalarProperty Name="ownerUserId" ColumnName="ownerUserId" />
@@ -113,6 +115,7 @@
     <EntitySetMapping Name="store">
       <EntityTypeMapping TypeName="AppDataBaseModel.store">
         <MappingFragment StoreEntitySet="store">
+          <ScalarProperty Name="LastEditDateTime" ColumnName="LastEditDateTime" />
           <ScalarProperty Name="stroeMapLocation" ColumnName="stroeMapLocation" />
           <ScalarProperty Name="html" ColumnName="html" />
           <ScalarProperty Name="ownerUser" ColumnName="ownerUser" />
@@ -180,6 +183,7 @@
     <EntitySetMapping Name="Slvs">
       <EntityTypeMapping TypeName="AppDataBaseModel.Slvs">
         <MappingFragment StoreEntitySet="Slvs">
+          <ScalarProperty Name="LastEditDateTime" ColumnName="LastEditDateTime" />
           <ScalarProperty Name="totalmaxUse" ColumnName="totalmaxUse" />
           <ScalarProperty Name="isGuid" ColumnName="isGuid" />
           <ScalarProperty Name="maxUse" ColumnName="maxUse" />

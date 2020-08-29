@@ -67,7 +67,7 @@ namespace AppWebServer.Controllers
                 if (!isOnlyUserData)
                 {
                     List<messagePublish> messagePublishs = db.messagePublish.Where(i => i.pDateEnd >= DateTime.Now && i.pDateStart <= DateTime.Now &&
-                    (i.p_users.ToLower().CompareTo("all") == 0 || i.p_users.Contains(user.userId + ",") || i.p_users.CompareTo(user.powerGroup.Value.ToString()) == 0)).ToList();
+                    (i.p_users.ToLower().CompareTo("all") == 0 ||(i.p_users.Contains(",") && i.p_users.Contains(user.userId + ",")) || (!i.p_users.Contains(",") && i.p_users.Contains(user.userId.ToString())) || i.p_users.CompareTo(user.powerGroup.Value.ToString()) == 0)).ToList();
                     foreach (messagePublish messages in messagePublishs)
                     {
                         _messagePublishes += "‧" + messages.pmessage + "\n\n";

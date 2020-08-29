@@ -1,4 +1,7 @@
-﻿using AppWebServer.Models;
+﻿using AppWebServer.Controllers.exchangModels;
+using AppWebServer.Models;
+using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -39,18 +42,21 @@ namespace AppWebServer.Controllers.api
             }
             return new HttpResponseMessage { Content = new StringContent("[" +(str.Length>0?str.Substring(1):"") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
-        public HttpResponseMessage GetStoreDetail(int Id)
+        public HttpResponseMessage GetStoreDetail(int Id,string LastEditDateTime)
         {
+            StoreDetail ds = null;
             store s = db.store.Find(Id);
-            string str = "";
-            if (s != null)
-            {
-                str += string.Format(@"{{""storeHtml"":""{0}"",""StoreWeb"":""{1}"",""storeWebF"":""{2}"",""stroeMapLocation"":""{3}"",""storeProductList"":{4},""images"":[""{5}""]}}",
-                       s.html!=null?s.html.Replace("\"", @"\""") : "", s.sotreWeb ?? "", s.sotreWeb2 ?? "", s.sotreAddr!= null? "https://www.google.com/maps/dir/?api=1&destination="+HttpUtility.UrlEncode(s.sotreAddr):"", s.products ?? "", s.potos!=null? s.potos.Replace(",",@""","""):"");
+            if (LastEditDateTime==null||s.LastEditDateTime != DateTime.Parse(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(LastEditDateTime)))) { 
+                string str = "";
+                if (s != null)
+                {
+                    ds = new StoreDetail(s.html, s.sotreWeb ?? "", s.sotreWeb2 ?? "", s.sotreAddr != null ? "https://www.google.com/maps/dir/?api=1&destination=" + HttpUtility.UrlEncode(s.sotreAddr) : "", s.products ?? "", s.potos, s.LastEditDateTime.Value);
+                }
                 
-
+                return new HttpResponseMessage { Content = new StringContent("[" + JsonConvert.SerializeObject(ds) + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
             }
-            return new HttpResponseMessage { Content = new StringContent("[" + str+"]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            else
+                return new HttpResponseMessage { Content = new StringContent("cache", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
     }
 }

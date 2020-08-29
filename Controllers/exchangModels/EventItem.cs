@@ -12,7 +12,7 @@ namespace AppWebServer.Controllers.exchangModels
         public string title { get; set; }
         public string date { get; set; }
         public string text { get; set; }
-        public EventItem(int eId, string url, string title, string date, string text)
+        public EventItem(int eId, string url, string title, string date, string text )
         {
             this.eId = eId;
             this.url = url;

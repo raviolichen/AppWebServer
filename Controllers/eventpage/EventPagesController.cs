@@ -53,6 +53,7 @@ namespace AppWebServer.Controllers
             if (ModelState.IsValid)
             {
                 eventPage.postDate = DateTime.Now;
+                eventPage.lastEditDateTime = DateTime.Now;
                 db.EventPage.Add(eventPage);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,7 +87,8 @@ namespace AppWebServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                eventPage.postDate = DateTime.Now;
+                eventPage.postDate = DateTime.Now;//??
+                eventPage.lastEditDateTime = DateTime.Now;
                 db.Entry(eventPage).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

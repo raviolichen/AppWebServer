@@ -120,6 +120,7 @@ namespace AppWebServer.Controllers
                 {
                     store.ownerUser =int.Parse( User.Identity.Name);
                 }
+                store.LastEditDateTime = DateTime.Now;
                 db.store.Add(store);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -164,6 +165,7 @@ namespace AppWebServer.Controllers
                 {
                     store.ownerUser = int.Parse(User.Identity.Name);
                 }
+                store.LastEditDateTime = DateTime.Now;
                 db.Entry(store).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -24,6 +24,7 @@ namespace AppWebServer.Models
         public Nullable<int> ownerUserId { get; set; }
         public Nullable<int> totalUsetimes { get; set; }
         public Nullable<int> userUsetimes { get; set; }
+        public Nullable<System.DateTime> lastEditDateTime { get; set; }
     
         public virtual User User { get; set; }
     }

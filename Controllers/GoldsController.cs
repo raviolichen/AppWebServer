@@ -69,6 +69,7 @@ namespace AppWebServer.Controllers
                     gold.ownerUserId = int.Parse(User.Identity.Name);
                 }
                 gold.potos = formatpotoString();
+                gold.lastEditDateTime = DateTime.Now;
                 db.Gold.Add(gold);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -106,6 +107,7 @@ namespace AppWebServer.Controllers
                     gold.ownerUserId = int.Parse(User.Identity.Name);
                 }
                 gold.potos = formatpotoString();
+                gold.lastEditDateTime = DateTime.Now;
                 db.Entry(gold).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

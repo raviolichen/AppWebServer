@@ -16,7 +16,8 @@ namespace AppWebServer.Controllers.exchangModels
         public string vId { get; set; }
         public string vtype { get; set; }
         public int votecount { get; set; }
-        public EventShowControl(string eventType,string ButtonText, string ButtonEnable,string detail,string VoteButtonText, string VoteButtonEnable,string vId,string vtype,int votecount)
+        public DateTime LastEditDateTime { get; set; }
+        public EventShowControl(string eventType,string ButtonText, string ButtonEnable,string detail,string VoteButtonText, string VoteButtonEnable,string vId,string vtype,int votecount,DateTime LastEditDateTime)
         {
             this. eventType= eventType;
             this. ButtonText= ButtonText;
@@ -27,6 +28,7 @@ namespace AppWebServer.Controllers.exchangModels
             this. vId=vId;
             this.vtype = vtype;
             this.votecount = votecount;
+            this.LastEditDateTime = LastEditDateTime;
         }
     }
 }

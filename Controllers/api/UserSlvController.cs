@@ -1,4 +1,6 @@
-﻿using AppWebServer.Models;
+﻿using AppWebServer.Controllers.exchangModels;
+using AppWebServer.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,25 +14,27 @@ namespace AppWebServer.Controllers.api
     public class UserSlvController : ApiController
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
-        public HttpResponseMessage GetUserSlv(int Id)
+        public HttpResponseMessage GetUserSlv(int Id, int page,int pagecount)
         {
             string str = "";
+            List<RecordJSON> records = new List<RecordJSON>();
             List<UserSlv> userSlvs = db.UserSlv.Where(i => i.userId == Id).ToList();
-            foreach (UserSlv userSlv in userSlvs)
+            int pageIndex = page * pagecount;
+            for (int i = pageIndex; i < (pageIndex + pagecount) && i < userSlvs.Count; i++)
             {
-
-                str += string.Format(",{{\"id\":\"{0}\",\"title\":\"{1}\",\"data\":\"銀幣：{2}\",\"subtext\":\"截止日期：{3}\",\"photo\":\"{4}\",\"url\":\"\"}}", userSlv.eId, userSlv.name, userSlv.currNum, userSlv.dateEnd.Value.ToString("yyyy-MM-dd"), userSlv.EventPage.url);
-
-
+                //str += string.Format(",{{\"id\":\"{0}\",\"title\":\"{1}\",\"data\":\"銀幣：{2}\",\"subtext\":\"截止日期：{3}\",\"photo\":\"{4}\",\"url\":\"\"}}", userSlv.eId, userSlv.name, userSlv.currNum, userSlv.dateEnd.Value.ToString("yyyy-MM-dd"), userSlv.EventPage.url);
+                records.Add(new RecordJSON(userSlvs[i].eId.ToString(), userSlvs[i].name, "銀幣：" + userSlvs[i].currNum, "截止日期：" + userSlvs[i].dateEnd.Value.ToString("yyyy-MM-dd"), userSlvs[i].EventPage.url, ""));
             }
-            return new HttpResponseMessage { Content = new StringContent("[" +(str.Length>0?str.Substring(1):"") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(records), Encoding.GetEncoding("UTF-8"), "application/json") };
+
+            //return new HttpResponseMessage { Content = new StringContent("[" +(str.Length>0?str.Substring(1):"") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
 
         }
-        public HttpResponseMessage GetOwnerSlv(int Id,int userId)
+        public HttpResponseMessage GetOwnerSlv(int Id, int userId)
         {
             List<int> keys = new List<int>();
             string str = "";
-            List<ownerSlvsdetail> owners = db.ownerSlvsdetail.Where(i => (i.eId == Id) && (i.userId==userId)).OrderBy(i => i.slvId).ToList();
+            List<ownerSlvsdetail> owners = db.ownerSlvsdetail.Where(i => (i.eId == Id) && (i.userId == userId)).OrderBy(i => i.slvId).ToList();
             foreach (ownerSlvsdetail item in owners)
             {
                 if (item.num > 0 && !keys.Contains(item.slvId) && item.isGuid.GetValueOrDefault())
@@ -39,13 +43,13 @@ namespace AppWebServer.Controllers.api
                     keys.Add(item.slvId);
                 }
             }
-            return new HttpResponseMessage { Content = new StringContent("[" +(str.Length>0?str.Substring(1):"") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            return new HttpResponseMessage { Content = new StringContent("[" + (str.Length > 0 ? str.Substring(1) : "") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
         public HttpResponseMessage GetSlvDetail(int Id)
         {
             string str = "";
             Slvs slvs = db.Slvs.Find(Id);
-            str = string.Format("{{\"potos\":[\"{0}\"],\"html\":\"{1}\",\"url\":\"{2}\"}}", (slvs.potos??"").Replace(",","\",\""), (slvs.html??"").Replace("\"", @"\"""), "");
+            str = string.Format("{{\"potos\":[\"{0}\"],\"html\":\"{1}\",\"url\":\"{2}\"}}", (slvs.potos ?? "").Replace(",", "\",\""), (slvs.html ?? "").Replace("\"", @"\"""), "");
             return new HttpResponseMessage { Content = new StringContent("[" + str + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
     }

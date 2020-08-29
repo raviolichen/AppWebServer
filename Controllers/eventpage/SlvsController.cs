@@ -75,6 +75,7 @@ namespace AppWebServer.Controllers
             {
                 slvs.eId =int.Parse(Request["eId"]);
                 slvs.potos = formatpotoString();
+                slvs.LastEditDateTime = DateTime.Now;
                 db.Slvs.Add(slvs);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { eId = slvs.eId });
@@ -112,6 +113,7 @@ namespace AppWebServer.Controllers
             if (ModelState.IsValid)
             {
                 slvs.potos = formatpotoString();
+                slvs.LastEditDateTime = DateTime.Now;
                 db.Entry(slvs).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index",new { eId=slvs.eId});

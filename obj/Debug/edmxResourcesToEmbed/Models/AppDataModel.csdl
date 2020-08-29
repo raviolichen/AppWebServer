@@ -99,6 +99,7 @@
     <NavigationProperty Name="UserSlv" Relationship="AppDataBaseModel.FK_UserSlv_ToEventPage" FromRole="EventPage" ToRole="UserSlv" />
     <NavigationProperty Name="Slvs" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="EventPage" ToRole="Slvs" />
     <NavigationProperty Name="Vote" Relationship="AppDataBaseModel.FK_Vote_EventPage" FromRole="EventPage" ToRole="Vote" />
+    <Property Name="lastEditDateTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="SignForm">
     <Key>
@@ -241,6 +242,7 @@
     <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_Gold_ToUser" FromRole="Gold" ToRole="User" />
     <Property Name="totalUsetimes" Type="Int32" />
     <Property Name="userUsetimes" Type="Int32" />
+    <Property Name="lastEditDateTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="messagePublish">
     <Key>
@@ -271,6 +273,7 @@
     <NavigationProperty Name="User" Relationship="AppDataBaseModel.FK_store_ToUser" FromRole="store" ToRole="User" />
     <Property Name="html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="stroeMapLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastEditDateTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="StoreType">
     <Key>
@@ -371,6 +374,7 @@
     <NavigationProperty Name="EventPage" Relationship="AppDataBaseModel.FK_Slv_ToEventPage" FromRole="Slvs" ToRole="EventPage" />
     <Property Name="isGuid" Type="Boolean" />
     <Property Name="totalmaxUse" Type="Int32" />
+    <Property Name="LastEditDateTime" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK_Slv_ToEventPage">
     <End Type="AppDataBaseModel.EventPage" Role="EventPage" Multiplicity="1" />

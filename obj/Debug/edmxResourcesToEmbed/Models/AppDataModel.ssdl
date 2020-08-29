@@ -23,6 +23,7 @@
     <Property Name="toGoldNum" Type="int" />
     <Property Name="postDate" Type="datetime" />
     <Property Name="evenType" Type="nvarchar" MaxLength="50" />
+    <Property Name="lastEditDateTime" Type="datetime" />
   </EntityType>
   <EntityType Name="Gold">
     <Key>
@@ -38,6 +39,7 @@
     <Property Name="ownerUserId" Type="int" />
     <Property Name="totalUsetimes" Type="int" />
     <Property Name="userUsetimes" Type="int" />
+    <Property Name="lastEditDateTime" Type="datetime" />
   </EntityType>
   <EntityType Name="messagePublish">
     <Key>
@@ -98,6 +100,7 @@
     <Property Name="slvNum" Type="int" />
     <Property Name="maxUse" Type="int" />
     <Property Name="totalmaxUse" Type="int" />
+    <Property Name="LastEditDateTime" Type="datetime" />
   </EntityType>
   <EntityType Name="store">
     <Key>
@@ -116,6 +119,7 @@
     <Property Name="isEnable" Type="bit" />
     <Property Name="stId" Type="int" />
     <Property Name="ownerUser" Type="int" />
+    <Property Name="LastEditDateTime" Type="datetime" />
   </EntityType>
   <EntityType Name="StoreType">
     <Key>
