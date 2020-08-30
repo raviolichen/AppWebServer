@@ -21,6 +21,26 @@
                         Entry(cache).State = EntityState.Modified;
                     }
                 }
+                else if ((entry.Entity.GetType() == typeof(StoreType) &&
+                    (entry.State == EntityState.Added || entry.State == EntityState.Deleted || entry.State == EntityState.Modified)))
+                {
+                    Cache cache = Cache.Find("StoreType");
+                    if (cache != null)
+                    {
+                        cache.expired = false;
+                        Entry(cache).State = EntityState.Modified;
+                    }
+                }
+                else if ((entry.Entity.GetType() == typeof(store)  &&
+                    (entry.State == EntityState.Added || entry.State == EntityState.Deleted || entry.State == EntityState.Modified)))
+                {
+                    Cache cache = Cache.Find("StoreList");
+                    if (cache != null)
+                    {
+                        cache.expired = false;
+                        Entry(cache).State = EntityState.Modified;
+                    }
+                }
             }
             return base.SaveChanges();
         }
