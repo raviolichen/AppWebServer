@@ -45,12 +45,18 @@ namespace AppWebServer.Controllers.api
             }
             return new HttpResponseMessage { Content = new StringContent("[" + (str.Length > 0 ? str.Substring(1) : "") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
-        public HttpResponseMessage GetSlvDetail(int Id)
+        public HttpResponseMessage GetSlvDetail(int Id, string LastEditDateTime)
         {
+
             string str = "";
             Slvs slvs = db.Slvs.Find(Id);
-            str = string.Format("{{\"potos\":[\"{0}\"],\"html\":\"{1}\",\"url\":\"{2}\"}}", (slvs.potos ?? "").Replace(",", "\",\""), (slvs.html ?? "").Replace("\"", @"\"""), "");
-            return new HttpResponseMessage { Content = new StringContent("[" + str + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            if (LastEditDateTime == null || slvs.LastEditDateTime != DateTime.Parse(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(LastEditDateTime))))
+            {
+                Slv_Gold_Detail slv_Gold_Detail = new Slv_Gold_Detail(slvs.potos, slvs.html, "", slvs.LastEditDateTime.GetValueOrDefault());
+                return new HttpResponseMessage { Content = new StringContent("[" + JsonConvert.SerializeObject(slv_Gold_Detail) + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            }
+            else
+                return new HttpResponseMessage { Content = new StringContent("cache", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
     }
 }

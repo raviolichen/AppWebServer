@@ -38,6 +38,7 @@
         <AssociationConnector Association="AppDataBaseModel.FK_VoteItem_Vote" />
         <EntityTypeShape EntityType="AppDataBaseModel.ProxyDateLog" Width="1.5" PointX="3" PointY="22.625" />
         <AssociationConnector Association="AppDataBaseModel.FK_ProxyDateLog_User" />
+        <EntityTypeShape EntityType="AppDataBaseModel.Cache" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

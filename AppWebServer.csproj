@@ -137,6 +137,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AppDataBaseEntities.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -177,12 +178,13 @@
     <Compile Include="Controllers\DynamictableHelper.cs" />
     <Compile Include="Controllers\eventpage\EventPagesController.cs" />
     <Compile Include="Controllers\eventpage\VoteItemsController.cs" />
-    <Compile Include="Controllers\exchangModels\EventItem.cs" />
-    <Compile Include="Controllers\exchangModels\EventShowControl.cs" />
-    <Compile Include="Controllers\exchangModels\HomePageJSON.cs" />
-    <Compile Include="Controllers\exchangModels\RecordJSON.cs" />
-    <Compile Include="Controllers\exchangModels\StoreDetail.cs" />
-    <Compile Include="Controllers\exchangModels\UserData.cs" />
+    <Compile Include="App_Code\exchangModels\EventItem.cs" />
+    <Compile Include="App_Code\exchangModels\EventShowControl.cs" />
+    <Compile Include="App_Code\exchangModels\HomePageJSON.cs" />
+    <Compile Include="App_Code\exchangModels\RecordJSON.cs" />
+    <Compile Include="App_Code\exchangModels\Slv_Gold_Detail.cs" />
+    <Compile Include="App_Code\exchangModels\StoreDetail.cs" />
+    <Compile Include="App_Code\exchangModels\UserData.cs" />
     <Compile Include="Controllers\GoldsController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\api\_HomePageController.cs" />
@@ -219,6 +221,9 @@
       <DependentUpon>AppDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Banner.cs">
+      <DependentUpon>AppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cache.cs">
       <DependentUpon>AppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventPage.cs">

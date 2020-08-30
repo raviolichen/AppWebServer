@@ -43,5 +43,6 @@ namespace AppWebServer.Models
         public DbSet<Vote> Vote { get; set; }
         public DbSet<VoteItem> VoteItem { get; set; }
         public DbSet<ProxyDateLog> ProxyDateLog { get; set; }
+        public DbSet<Cache> Cache { get; set; }
     }
 }

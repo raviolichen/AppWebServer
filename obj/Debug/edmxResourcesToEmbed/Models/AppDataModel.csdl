@@ -71,6 +71,7 @@
       <End Role="User" EntitySet="User" />
       <End Role="ProxyDateLog" EntitySet="ProxyDateLog" />
     </AssociationSet>
+    <EntitySet Name="Cache" EntityType="AppDataBaseModel.Cache" />
   </EntityContainer>
   <EntityType Name="Banner">
     <Key>
@@ -490,4 +491,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Cache">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="md5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="expired" Type="Boolean" />
+    <Property Name="expiredDateTime" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

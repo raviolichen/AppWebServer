@@ -251,5 +251,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Cache">
+      <EntityTypeMapping TypeName="AppDataBaseModel.Cache">
+        <MappingFragment StoreEntitySet="Cache">
+          <ScalarProperty Name="expiredDateTime" ColumnName="expiredDateTime" />
+          <ScalarProperty Name="expired" ColumnName="expired" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="md5" ColumnName="md5" />
+          <ScalarProperty Name="data" ColumnName="data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

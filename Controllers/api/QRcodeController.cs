@@ -41,12 +41,14 @@ namespace AppWebServer.Controllers.api
                     string[] value = decrypt(isProxy?proxyuser.token:user.token, _data).Split(',');
                     if (isProxy)
                     {
-                        ProxyDateLog proxyDateLog = new ProxyDateLog();
-                        proxyDateLog.data = _data;
-                        proxyDateLog.proxyUserId = userId;
-                        proxyDateLog.userId = user.userId;
-                        proxyDateLog.deviceId = deviceId;
-                        proxyDateLog.proxyDate = DateTime.Now;
+                        ProxyDateLog proxyDateLog = new ProxyDateLog
+                        {
+                            data = _data,
+                            proxyUserId = userId,
+                            userId = user.userId,
+                            deviceId = deviceId,
+                            proxyDate = DateTime.Now
+                        };
                         db.ProxyDateLog.Add(proxyDateLog);
                         db.SaveChanges();
 

@@ -14,6 +14,16 @@
           <Property Name="dateStart" Type="datetime" />
           <Property Name="dateEnd" Type="datetime" />
         </EntityType>
+        <EntityType Name="Cache">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="data" Type="nvarchar(max)" />
+          <Property Name="md5" Type="nvarchar" MaxLength="200" />
+          <Property Name="expired" Type="bit" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="expiredDateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="EventPage">
           <Key>
             <PropertyRef Name="eid" />
@@ -403,6 +413,7 @@
         </Association>
         <EntityContainer Name="AppDataBaseModelStoreContainer">
           <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cache" EntityType="Self.Cache" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPage" EntityType="Self.EventPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gold" EntityType="Self.Gold" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="messagePublish" EntityType="Self.messagePublish" Schema="dbo" store:Type="Tables" />
@@ -574,6 +585,7 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
             <End Role="User" EntitySet="User" />
             <End Role="ProxyDateLog" EntitySet="ProxyDateLog" />
           </AssociationSet>
+          <EntitySet Name="Cache" EntityType="AppDataBaseModel.Cache" />
         </EntityContainer>
         <EntityType Name="Banner">
           <Key>
@@ -993,6 +1005,16 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Cache">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="md5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="expired" Type="Boolean" />
+          <Property Name="expiredDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1246,6 +1268,17 @@ FROM [dbo].[ownerSlvsdetail] AS [ownerSlvsdetail]</DefiningQuery>
                 <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="deviceId" ColumnName="deviceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cache">
+            <EntityTypeMapping TypeName="AppDataBaseModel.Cache">
+              <MappingFragment StoreEntitySet="Cache">
+                <ScalarProperty Name="expiredDateTime" ColumnName="expiredDateTime" />
+                <ScalarProperty Name="expired" ColumnName="expired" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="md5" ColumnName="md5" />
+                <ScalarProperty Name="data" ColumnName="data" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -9,6 +9,16 @@
     <Property Name="dateStart" Type="datetime" />
     <Property Name="dateEnd" Type="datetime" />
   </EntityType>
+  <EntityType Name="Cache">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="data" Type="nvarchar(max)" />
+    <Property Name="md5" Type="nvarchar" MaxLength="200" />
+    <Property Name="expired" Type="bit" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="expiredDateTime" Type="datetime" />
+  </EntityType>
   <EntityType Name="EventPage">
     <Key>
       <PropertyRef Name="eid" />
@@ -398,6 +408,7 @@
   </Association>
   <EntityContainer Name="AppDataBaseModelStoreContainer">
     <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cache" EntityType="Self.Cache" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventPage" EntityType="Self.EventPage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Gold" EntityType="Self.Gold" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="messagePublish" EntityType="Self.messagePublish" Schema="dbo" store:Type="Tables" />

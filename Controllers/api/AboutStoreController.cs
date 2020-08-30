@@ -2,6 +2,8 @@
 using AppWebServer.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,34 +15,94 @@ namespace AppWebServer.Controllers.api
     public class AboutStoreController : ApiController
     {
         private AppDataBaseEntities db = new AppDataBaseEntities();
-        public HttpResponseMessage GetStoreType()
+        public HttpResponseMessage GetStoreType(string md5)
         {
-
-            var storeType = db.StoreType.ToList();
-            string str = "";
-            if (storeType.Count() > 0)
+            Cache cache = db.Cache.Where(c => c.name.CompareTo("StoreType") == 0 && c.expired == true).FirstOrDefault();
+            if (cache != null)
             {
-                foreach(StoreType _storeType in storeType)
-                {
-                    str+=string.Format(",{{" + @"""TId"":""{0}"",""TName"":""{1}"",""Images"":[""{2}""]" + "}}",_storeType.stId, _storeType.stName, _storeType.stpotos.Replace(",",@""","""));
-                }
+                if (md5 != null && cache.md5.CompareTo(md5) == 0)
+                    return new HttpResponseMessage { Content = new StringContent("cache", Encoding.GetEncoding("UTF-8"), "application/json") };
+                else
+                    return new HttpResponseMessage { Content = new StringContent("[" + cache.data + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
             }
-            return new HttpResponseMessage { Content = new StringContent("[" + str.Substring(1) + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            else
+            {
+                var storeType = db.StoreType.ToList();
+                string str = "";
+                if (storeType.Count() > 0)
+                {
+                    foreach (StoreType _storeType in storeType)
+                    {
+                        str += string.Format(",{{" + @"""TId"":""{0}"",""TName"":""{1}"",""Images"":[""{2}""]" + "}}", _storeType.stId, _storeType.stName, _storeType.stpotos.Replace(",", @""","""));
+                    }
+                }
+                string josn = (str.Length > 0 ? str.Substring(1) : "");
+                md5 = Utility.CreateMD5(josn);
+                cache = db.Cache.Where(c => c.name.CompareTo("StoreType") == 0).FirstOrDefault();
+                if (cache == null)
+                {
+                    cache = new Cache();
+                    db.Cache.Add(cache);
+                }
+                else
+                {
+                    db.Entry(cache).State = EntityState.Modified;
+                }
+                cache.name = "StoreType";
+                cache.data = josn + ",{\"md5\":\"" + md5 + "\"}";
+                cache.expired = true;
+                cache.expiredDateTime = DateTime.Now;
+                cache.md5 = md5;
+                db.SaveChanges();
+                return new HttpResponseMessage { Content = new StringContent("[" + cache.data + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            }
         }
-        public HttpResponseMessage GetStoreList(int Id)
+        public HttpResponseMessage GetStoreList(int Id,string md5)
         {
             StoreType storeType = db.StoreType.Find(Id);
-            string str = "";
-            if(storeType!=null && storeType.store.Count > 0)
+            Cache cache = db.Cache.Where(c => c.name.CompareTo("StoreList") == 0 && c.expired == true).FirstOrDefault();
+            if (cache != null)
             {
-                foreach(store i in storeType.store)
-                {
-                    str += string.Format(@",{{""id"":""{0}"",""title"":""{1}"",""data"":""{2}"",""subtext"":""{3}"",""photo"":""{4}"",""url"":""""}}",
-                        i.storeId,i.storeName,i.sotrePhone,i.sotreAddr,((i.potos!=null&&i.potos.Length>0)?i.potos.Split(',')[0]:"about:block"));
-                }
-
+                if (md5 != null && cache.md5.CompareTo(md5) == 0)
+                    return new HttpResponseMessage { Content = new StringContent("cache", Encoding.GetEncoding("UTF-8"), "application/json") };
+                else
+                    return new HttpResponseMessage { Content = new StringContent("[" + cache.data + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
             }
-            return new HttpResponseMessage { Content = new StringContent("[" +(str.Length>0?str.Substring(1):"") + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            else
+            {
+               List<RecordJSON> recordJSONs = new List<RecordJSON>();
+                string str = "";
+                if (storeType != null && storeType.store.Count > 0)
+                {
+                    foreach (store i in storeType.store)
+                    {
+                        str += string.Format(@",{{""id"":""{0}"",""title"":""{1}"",""data"":""{2}"",""subtext"":""{3}"",""photo"":""{4}"",""url"":""""}}",
+                            i.storeId, i.storeName, i.sotrePhone, i.sotreAddr, ((i.potos != null && i.potos.Length > 0) ? i.potos.Split(',')[0] : "about:block"));
+
+                    }
+
+                }
+                string josn =  (str.Length > 0 ? str.Substring(1) : "");
+                md5= Utility.CreateMD5(josn);
+                cache = db.Cache.Where(c => c.name.CompareTo("StoreList") == 0).FirstOrDefault();
+                if (cache == null)
+                {
+                    cache = new Cache();
+                    db.Cache.Add(cache);
+                }
+                else
+                {
+                    db.Entry(cache).State = EntityState.Modified;
+                }
+                cache.name = "StoreList";
+                cache.data = josn+",{\"md5\":\""+md5+"\"}";
+                cache.expired = true;
+                cache.expiredDateTime = DateTime.Now;
+                cache.md5 = md5;
+                db.SaveChanges();
+
+                return new HttpResponseMessage { Content = new StringContent("[" + cache.data + "]", Encoding.GetEncoding("UTF-8"), "application/json") };
+            }
         }
         public HttpResponseMessage GetStoreDetail(int Id,string LastEditDateTime)
         {
