@@ -59,8 +59,9 @@ namespace AppWebServer.Controllers.api
         }
         public HttpResponseMessage GetStoreList(int Id,string md5)
         {
+            string cacheName = "StoreList?TypeId="+Id;
             StoreType storeType = db.StoreType.Find(Id);
-            Cache cache = db.Cache.Where(c => c.name.CompareTo("StoreList") == 0 && c.expired == true).FirstOrDefault();
+            Cache cache = db.Cache.Where(c => c.name.CompareTo(cacheName) == 0 && c.expired == true).FirstOrDefault();
             if (cache != null)
             {
                 if (md5 != null && cache.md5.CompareTo(md5) == 0)
@@ -84,7 +85,7 @@ namespace AppWebServer.Controllers.api
                 }
                 string josn =  (str.Length > 0 ? str.Substring(1) : "");
                 md5= Utility.CreateMD5(josn);
-                cache = db.Cache.Where(c => c.name.CompareTo("StoreList") == 0).FirstOrDefault();
+                cache = db.Cache.Where(c => c.name.CompareTo(cacheName) == 0).FirstOrDefault();
                 if (cache == null)
                 {
                     cache = new Cache();
@@ -94,8 +95,8 @@ namespace AppWebServer.Controllers.api
                 {
                     db.Entry(cache).State = EntityState.Modified;
                 }
-                cache.name = "StoreList";
-                cache.data = josn+",{\"md5\":\""+md5+"\"}";
+                cache.name = cacheName;
+                cache.data = josn.Length>0? josn + ",{\"md5\":\""+md5+"\"}": "{\"md5\":\"" + md5 + "\"}";
                 cache.expired = true;
                 cache.expiredDateTime = DateTime.Now;
                 cache.md5 = md5;
